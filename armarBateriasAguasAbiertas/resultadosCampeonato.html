@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./jsPDF-1.3.2/dist/jspdf.min.js"></script>
+    <script src="./jsPDF-Autotable/jsPDF-Autotable.js"></script>
+    <script src="nadadores.js"></script>
+    <script src="nadadoresAlmafuerte.js"></script>
+    <script src="nadadoresBocaDeRio.js"></script>
+    <script src="nadadoresRumipal.js"></script>
+    <script src="script.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="natacion.css">
+
+
+    <title>Resultados Campeonato</title>
+</head>
+<style>
+    div#printSection iframe {
+        width: 100%;
+        height: 100vh;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div id="printSection"></div>
+
+        <div class="ingresarDatosContainer">
+
+            <div>
+                <h2>Ingresar El nombre de la competencia</h2>
+                <input type="text" placeholder="Nombre de la competencia" id="nombreCompetencia">
+            </div>
+
+            <div>
+                <h2>Ingresar datos de nadadores evento 1</h2>
+                <textarea name="" cols="30" rows="10" id="datosNadadores_1"></textarea>
+            </div>
+            <div>
+                <h2>Ingresar datos de nadadores evento 2</h2>
+                <textarea name="" cols="30" rows="10" id="datosNadadores_2"></textarea>
+            </div>
+            <div>
+                <h2>Ingresar datos de nadadores evento 3</h2>
+                <textarea name="" cols="30" rows="10" id="datosNadadores_3"></textarea>
+            </div>
+            <div>
+                <h2>Ingresar datos de nadadores evento 4</h2>
+                <textarea name="" cols="30" rows="10" id="datosNadadores_4"></textarea>
+            </div>
+
+
+            <div class="botonesContainer">
+                <button id="btnActualizarDatosNadadores" class="primary-button">Actualizar datos nadadores</button>
+
+                <div>
+                    <button id="btnGenerarPdfCampeonato" class="secondary-button hidden">Generar PDF Campeonato</button>
+                    <button id="btnGenerarPdfListado" class="secondary-button hidden">Generar PDF Listado</button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="data-container hidden" id="data-container">
+
+            <div id="cantidadNadadores">
+                <h3>Recuento de nadadores</h3>
+            </div>
+
+            <div class="tableContainer">
+                <h3>Nadadores que faltan mostrar en el PDF</h3>
+                <span>*Verificar la configuración de las baterias que esten incluidos todos los niveles y categorias del
+                    evento</span>
+
+                <table id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Club</th>
+                            <th>ID</th>
+                            <th>Documento</th>
+                            <th>Nivel</th>
+                            <th>Fecha</th>
+                            <th>Genero</th>
+                            <th>Distancia</th>
+                            <th>Categoria</th>
+                            <th>Tiempo</th>
+                            <th>TiempoFormat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+
+            </div>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <body>
+
+
+        <script>
+            const cantidadMinimaEventosParaPremiacionGeneral =
+                1; //seria la cantidad minima de eventos que tiene que tener el nadador para entrar en el ranking
+            const cantidadEventosConMejorPuntaje =
+                1; // seria la cantidad de eventos que se tienen en cuenta para el ranking
+
+
+            const botones = [{
+                    id: "btnGenerarPdfCampeonato",
+                    click: async () => {
+                        cargarDatosPDF({
+                            resultadosCampeonato: true,
+                        })
+                    }
+                },
+                {
+                    id: "btnGenerarPdfListado",
+                    click: async () => {
+
+                        cargarDatosPDF({
+                            resultadosCampeonato: true,
+                            listadoNadadores: true
+                        })
+
+                    }
+                },
+                {
+                    id: "btnActualizarDatosNadadores",
+                    click: () => {
+                        actualizarDatosNadadores()
+                    }
+                }
+            ];
+
+            async function cargarDatosPDF({
+                resultadosCampeonato,
+                listadoNadadores = false
+            }) {
+
+                var eventos = [];
+                var eventosConDatos = 0;
+                for (let i = 1; i <= 4; i++) {
+                    let numeroEvento = i;
+                    let bdNadadores = await JSON.parse(localStorage.getItem(`datosNadadores_${numeroEvento}`))
+                    eventos.push(bdNadadores)
+
+                    if (bdNadadores.length != 0) eventosConDatos++
+                }
+
+                if (eventosConDatos < 2) {
+                    alert("Debe haber al menos 2 eventos cargados");
+                    return;
+                }
+
+                let nombreCompetencia = document.getElementById("nombreCompetencia").value
+                if (nombreCompetencia == "") {
+                    alert("Ingrese un nombre para la competencia");
+                    return;
+                }
+                localStorage.setItem("nombreCompetencia", nombreCompetencia)
+
+                if (cantidadEventosConMejorPuntaje > cantidadMinimaEventosParaPremiacionGeneral) {
+                    alert(
+                        "La cantidad de eventos a incluir con mejor puntaje no puede ser mayor a la cantidad minima de eventos para la premiacion general"
+                    )
+                    return;
+                }
+
+                // var participantes = [nadadores, nadadoresAlmafuerte, nadadoresBocaDeRio, nadadoresRumipal]
+
+                // var nadadoresResultadoCampeonato = agruparPorDocumento(participantes)
+
+                var nadadoresResultadoCampeonato = agruparPorDocumento({
+                    participantes: eventos,
+                    listadoNadadores
+                })
+
+                await generarPdf({
+                    nadadoresEvento: nadadoresResultadoCampeonato,
+                    resultadosCampeonato,
+                    listadoNadadores,
+                    abrirEnNuevaVentana: true
+                })
+
+
+                const dataContainer = document.getElementById("data-container")
+                dataContainer.classList.remove("hidden");
+
+                const cantidadNadadores = document.getElementById("cantidadNadadores")
+                cantidadNadadores.appendChild(recuentoDeNadadores)
+
+                console.log(nadadoresQueFaltanMostrar)
+
+                // Obtener la tabla y el cuerpo de la tabla
+                var myTable = document.getElementById("myTable");
+                var tableBody = document.getElementById("tableBody");
+
+                tableBody.innerHTML = "";
+
+                // Llenar la tabla con los datos JSON
+                nadadoresQueFaltanMostrar.forEach(function (item) {
+                    var row = tableBody.insertRow();
+
+                    for (var key in item) {
+                        if (item.hasOwnProperty(key)) {
+                            var cell = row.insertCell();
+                            cell.innerHTML = item[key];
+                        }
+                    }
+                });
+            }
+
+            function actualizarDatosNadadores() {
+
+
+                for (let i = 1; i <= 4; i++) {
+                    let numeroEvento = i;
+                    let datosNadadores = document.getElementById(`datosNadadores_${numeroEvento}`).value;
+
+                    // if (datosNadadores == "") {
+                    //     alert("Por favor ingrese los datos de los nadadores");
+                    // }
+
+                    try {
+                        datosNadadores = datosNadadores.trim().slice(0, -1).replaceAll(" ,", ",")
+
+                        let formatear = ('[' + datosNadadores + ']').replaceAll("'", '"');
+
+                        // Intenta convertir el texto a un array de objetos
+                        var nadadoresFormat = JSON.parse(formatear);
+
+                        nadadoresFormat = JSON.stringify(nadadoresFormat)
+                        localStorage.setItem(`datosNadadores_${numeroEvento}`, nadadoresFormat)
+
+                    } catch (error) {
+                        // Maneja cualquier error en el formato del JSON
+                        console.error('Error al convertir el JSON:', error);
+                        alert(
+                            `Error al convertir los datos, verifique que los nombres de los nadadores no contengan comillas, para el evento ${numeroEvento}`
+                        );
+                    }
+                }
+
+
+                document.getElementById("btnGenerarPdfListado").classList.remove("hidden");
+                document.getElementById("btnGenerarPdfCampeonato").classList.remove("hidden");
+                alert("Datos actualizados correctamente")
+
+
+
+            }
+
+
+            window.onload = () => {
+
+
+                let nombreCompetencia = localStorage.getItem("nombreCompetencia")
+
+                if (nombreCompetencia != null) {
+                    document.getElementById("nombreCompetencia").value = nombreCompetencia
+                }
+
+                for (let i = 1; i <= 4; i++) {
+                    let numeroEvento = i;
+                    let datosNadadores = localStorage.getItem(`datosNadadores_${numeroEvento}`)
+
+                    if (datosNadadores != null) {
+                        if (datosNadadores != "[]") {
+                            datosNadadores = datosNadadores.replace("[", "").replace("]", "") + ",";
+                        } else {
+                            datosNadadores = "";
+                        }
+                        document.getElementById(`datosNadadores_${numeroEvento}`).value = datosNadadores
+                    }
+
+                }
+
+
+
+                botones.forEach(boton => {
+                    let btn = document.getElementById(boton.id)
+                    btn.addEventListener("click", () => {
+                        boton.click()
+                    })
+
+                });
+
+
+            }
+
+            function agruparPorDocumento({
+                participantes,
+                listadoNadadores
+            }) {
+                let agrupados = {};
+
+                participantes.forEach(function (nadadoresEvento) {
+
+                    // segun la bateria general (que seria la configuracion general para que aparezcan todos los resultados)
+                    // a cada base de datos de nadadores, a cada nadador se configura el dato del puntaje y puesto
+                    nadadoresEvento = realizarPuntaje(nadadoresEvento);
+
+                    // agrupo los nadadores de todos los eventos segun el documento
+                    nadadoresEvento.forEach(function (nadador) {
+                        if (!listadoNadadores && nadador.tiempoFormat == "-") {
+                            return
+                        }
+                        if (agrupados.hasOwnProperty(nadador.documento)) {
+                            agrupados[nadador.documento].push(nadador);
+                        } else {
+                            agrupados[nadador.documento] = [nadador];
+                        }
+                    });
+                });
+
+                // Almaceno en un array el array de los nadadores agrupados
+                // arrNadadoresAgrupados = [
+                //     [
+                //         {nadador_1_evento_1},
+                //         {nadador_1_evento_2},
+                //     ]
+                // ]
+                let arrNadadoresAgrupados = Object.values(agrupados);
+
+                let arrNadadoresAgrupadosAux = arrNadadoresAgrupados;
+
+                if (!listadoNadadores) {
+                    // Si el puntaje de algun evento es = 0 entonces se descarta ese evento
+                    arrNadadoresAgrupados = descartarEventosSinPuntaje(arrNadadoresAgrupados)
+                }
+
+                
+                // Obtengo solo los nadadores que hayan participado de al menos X eventos
+                arrNadadoresAgrupados = arrNadadoresAgrupados.filter(arrNadador => arrNadador.length >=
+                    cantidadMinimaEventosParaPremiacionGeneral);
+
+                // let arrNadadoresDescartados = arrNadadoresAgrupadosAux.filter(arrNadador => arrNadador.length < 3);
+                // console.log("Nadadores eliminados por no tener 3 eventos:");
+                // console.log(arrNadadoresDescartados);
+
+                // Obtengo solo los nadadores que hayan participado en la misma distancia en todos los eventos
+                arrNadadoresAgrupados = obtenerObjetoConMismaDistancia(arrNadadoresAgrupados);
+
+
+                // mostrarInfoNadadorEventos(arrNadadoresAgrupados)
+
+                //obtengo los eventos con mejor puntaje 
+                arrNadadoresAgrupados = obtenerEventosConMejorPuntaje(arrNadadoresAgrupados)
+
+
+
+                // *************************************************
+                // let test = [];
+
+                // arrNadadoresAgrupados.forEach(eventosNadador => {
+                //     let res = eventosNadador;
+                //     if (eventosNadador.length == 4) {
+                //        res = eventosNadador.splice(1,3)
+                //     }
+                //     test.push(res)
+                // });
+
+                // // console.log(test)
+
+                // arrNadadoresAgrupados = test
+
+                // *************************************************
+
+                // obtengo el primer objeto agregando el dato del puntaje acumulado
+                arrNadadoresAgrupados = arrNadadoresAgrupados.map(arrNadador => obtenerObjetoConPuntajeSumado(
+                    arrNadador))
+
+                return arrNadadoresAgrupados;
+            }
+
+            function descartarEventosSinPuntaje(arrNadador) {
+                let res = []
+
+                arrNadador.forEach(eventosNadador => {
+                    let resAux = [];
+                    eventosNadador.forEach(evento => {
+
+                        if (evento.puntaje != 0) {
+                            resAux.push(evento)
+                        }
+                    });
+
+                    res.push(resAux)
+
+                });
+
+                return res
+            }
+
+            function obtenerEventosConMejorPuntaje(arrNadador) {
+                let res = []
+
+                arrNadador.forEach(eventosNadador => {
+                    if (eventosNadador.length > cantidadEventosConMejorPuntaje) {
+
+                        eventosNadador.sort(function (evento_a, evento_b) {
+                            if (evento_a.puesto > evento_b.puesto) {
+                                return 1;
+                            }
+                            if (evento_a.puesto < evento_b.puesto) {
+                                return -1;
+                            }
+                            // a must be equal to b
+                            return 0;
+                        });
+                        res.push(eventosNadador.slice(0, cantidadEventosConMejorPuntaje))
+
+                    } else {
+                        res.push(eventosNadador)
+                    }
+
+
+                });
+
+                return res
+
+            }
+
+            function mostrarInfoNadadorEventos(arrNadador) {
+                let res = [];
+                arrNadador.forEach(eventosNadador => {
+                    let resAux = [];
+
+                    let texto = "";
+
+                    eventosNadador.forEach((evento, index) => {
+
+                        if (index == 0) {
+                            texto += evento.apellido + " " + evento.nombre + " *"
+                        }
+                        texto += evento.evento == undefined ? "Embalse 2023 " : evento.evento + " ";
+                        texto += "puesto: " + evento.puesto + " ";
+                        texto += "puntaje: " + evento.puntaje + "* ";
+
+
+                        // let resAux2 = [
+                        //     evento.apellido,
+                        //     evento.nombre,
+                        //     evento.evento,
+                        //     "puesto: " + evento.puesto,
+                        //     "puntaje: " + evento.puntaje
+                        // ];
+
+                        // resAux.push(resAux2)
+
+                    });
+
+                    res.push(texto)
+                })
+
+                res.sort(function (nadador_a, nadador_b) {
+                    if (nadador_a > nadador_b) {
+                        return 1;
+                    }
+                    if (nadador_a < nadador_b) {
+                        return -1;
+                    }
+                    // a must be equal to b
+                    return 0;
+                });
+
+                console.table(res)
+
+            }
+
+            function obtenerObjetoConMismaDistancia(arrNadadoresAgrupados) {
+
+                let nadadoresEliminados = [];
+
+                let response = arrNadadoresAgrupados.filter(arr => {
+                    let distancias = arr.map(obj => obj.distancia);
+                    let distanciaRepetida = distancias.find(distancia => distancias.filter(dist => dist ===
+                        distancia).length >= cantidadMinimaEventosParaPremiacionGeneral);
+                    if (distanciaRepetida) {
+                        return true;
+                    } else {
+                        nadadoresEliminados.push(arr);
+                        return false;
+                    }
+                });
+
+                // console.log("Nadadores eliminados por nadar diferentes eventos:");
+                // console.log(nadadoresEliminados);
+
+                return response;
+            };
+
+
+            function obtenerObjetoConPuntajeSumado(array) {
+                let puntajeTotal = array.slice(1).reduce(function (acumulador, objeto) {
+                    return acumulador + objeto.puntaje;
+                }, array[0].puntaje);
+
+                let resultado = Object.assign({}, array[0]);
+                resultado.puntaje = puntajeTotal;
+
+                return resultado;
+            }
+
+            function realizarPuntaje(baseDeDatosNadadores) {
+
+                let resultado = [];
+
+                bateria_general_data.forEach(orden => {
+
+                    let nadadoresDistancia = baseDeDatosNadadores.filter(n => n.distancia == orden.distancia);
+
+                    orden.nivel.forEach(nivel => {
+                        let nadadoresNivel = nadadoresDistancia.filter(n => n.nivel == nivel);
+
+                        orden.categoria.forEach(categoria => {
+                            let nadadoresCategoria = nadadoresNivel.filter(n => n.categoria ==
+                                categoria);
+
+                            orden.genero.forEach(genero => {
+                                let nadadoresGenero = nadadoresCategoria.filter(n => n
+                                    .genero == genero);
+
+                                if (nadadoresGenero.length == 0) return;
+
+                                nadadoresGenero.sort(function (a, b) {
+                                    if (a.tiempo > b.tiempo) {
+                                        return 1;
+                                    }
+                                    if (a.tiempo < b.tiempo) {
+                                        return -1;
+                                    }
+                                    // a must be equal to b
+                                    return 0;
+                                });
+
+                                let datos = nadadoresGenero.map((nadador, index) => {
+                                    nadador.puesto = nadador.tiempoFormat ==
+                                        "-" ? "-" : index + 1
+                                    nadador.puntaje = nadador.tiempoFormat ==
+                                        "-" ? 0 : index + 1 <= parseInt(Object
+                                            .keys(puntaje).pop()) ? puntaje[
+                                            index + 1] : 0
+                                    resultado.push(nadador)
+                                });
+
+
+                            });
+                        });
+
+                    });
+                });
+
+                return resultado
+
+            }
+        </script>
+    </body>
+
+</html>

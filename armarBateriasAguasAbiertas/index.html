@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./jsPDF-1.3.2/dist/jspdf.min.js"></script>
+    <script src="./jsPDF-Autotable/jsPDF-Autotable.js"></script>
+    <script src="script.js"></script>
+    <script src="nadadores.js"></script>
+    <script src="nadadoresBocaDeRio.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="natacion.css">
+
+    <title>Generar baterias</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="printSection"></div>
+
+        <div class="ingresarDatosContainer">
+
+            <div>
+                <h2>Ingresar El nombre de la competencia</h2>
+                <input type="text" placeholder="Nombre de la competencia" id="nombreCompetencia">
+            </div>
+
+            <div>
+                <h2>Ingresar datos de nadadores</h2>
+                <textarea name="" cols="30" rows="10" id="datosNadadores"></textarea>
+            </div>
+
+
+            <div class="botonesContainer">
+                <button id="btnActualizarDatosNadadores" class="primary-button">Actualizar datos nadadores</button>
+
+                <div>
+                    <button id="btnGenerarPdfBaterias" class="secondary-button hidden">Generar PDF Baterias</button>
+                    <button id="btnGenerarPdfListado" class="secondary-button hidden">Generar PDF Listado</button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="data-container hidden" id="data-container">
+
+            <div id="cantidadNadadores">
+                <h3>Recuento de nadadores</h3>
+            </div>
+
+            <div class="tableContainer">
+                <h3>Nadadores que faltan mostrar en el PDF</h3>
+                <span>*Verificar la configuración de las baterias que esten incluidos todos los niveles y categorias del
+                    evento</span>
+
+                <table id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Club</th>
+                            <th>ID</th>
+                            <th>Documento</th>
+                            <th>Nivel</th>
+                            <th>Fecha</th>
+                            <th>Genero</th>
+                            <th>Distancia</th>
+                            <th>Categoria</th>
+                            <th>Tiempo</th>
+                            <th>TiempoFormat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+
+            </div>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <script>
+        const botones = [{
+                id: "btnGenerarPdfBaterias",
+                click: async () => {
+                    cargarDatosPDF({
+                        resultadosCampeonato: false,
+                    })
+                }
+            },
+            {
+                id: "btnGenerarPdfListado",
+                click: async () => {
+
+                    cargarDatosPDF({
+                        resultadosCampeonato: false,
+                        listadoNadadores: true
+                    })
+
+                }
+            },
+            {
+                id: "btnActualizarDatosNadadores",
+                click: () => {
+                    actualizarDatosNadadores()
+                }
+            }
+        ];
+
+
+        async function cargarDatosPDF({
+            resultadosCampeonato,
+            listadoNadadores = false
+        }) {
+
+            let bdNadadores = JSON.parse(localStorage.getItem("datosNadadores"))
+
+
+            if (bdNadadores.length == 0) {
+                alert("No hay datos para mostrar");
+                return;
+            }
+
+            let nombreCompetencia = document.getElementById("nombreCompetencia").value
+            if (nombreCompetencia == "") {
+                alert("Ingrese un nombre para la competencia");
+                return;
+            }
+            localStorage.setItem("nombreCompetencia", nombreCompetencia)
+
+
+            await generarPdf({
+                nadadoresEvento: bdNadadores,
+                resultadosCampeonato,
+                nombreEvento: nombreCompetencia,
+                listadoNadadores
+            })
+
+            const dataContainer = document.getElementById("data-container")
+            dataContainer.classList.remove("hidden");
+
+            const cantidadNadadores = document.getElementById("cantidadNadadores")
+            cantidadNadadores.appendChild(recuentoDeNadadores)
+
+            console.log(nadadoresQueFaltanMostrar)
+
+            // Obtener la tabla y el cuerpo de la tabla
+            var myTable = document.getElementById("myTable");
+            var tableBody = document.getElementById("tableBody");
+
+            tableBody.innerHTML = "";
+
+            // Llenar la tabla con los datos JSON
+            nadadoresQueFaltanMostrar.forEach(function (item) {
+                var row = tableBody.insertRow();
+
+                for (var key in item) {
+                    if (item.hasOwnProperty(key)) {
+                        var cell = row.insertCell();
+                        cell.innerHTML = item[key];
+                    }
+                }
+            });
+        }
+
+
+        window.onload = () => {
+
+            let nombreCompetencia = localStorage.getItem("nombreCompetencia")
+
+            if (nombreCompetencia != null) {
+                document.getElementById("nombreCompetencia").value = nombreCompetencia
+            }
+
+
+            let datosNadadores = localStorage.getItem("datosNadadores")
+
+            if (datosNadadores != null) {
+                datosNadadores = datosNadadores.replace("[", "").replace("]", "") + ",";
+                document.getElementById("datosNadadores").value = datosNadadores
+            }
+
+
+            botones.forEach(boton => {
+                let btn = document.getElementById(boton.id)
+                btn.addEventListener("click", () => {
+                    boton.click()
+                })
+
+            });
+        }
+
+
+        function actualizarDatosNadadores() {
+
+            let datosNadadores = document.getElementById("datosNadadores").value;
+
+            if (datosNadadores == "") {
+                alert("Por favor ingrese los datos de los nadadores");
+                return;
+            }
+
+            try {
+                datosNadadores = datosNadadores.trim().slice(0, -1).replaceAll(" ,", ",")
+
+                let formatear = ('[' + datosNadadores + ']').replaceAll("'", '"');
+
+                // Intenta convertir el texto a un array de objetos
+                var nadadoresFormat = JSON.parse(formatear);
+
+                nadadoresFormat = JSON.stringify(nadadoresFormat)
+                localStorage.setItem("datosNadadores", nadadoresFormat)
+
+                alert("Datos actualizados correctamente")
+
+                document.getElementById("btnGenerarPdfListado").classList.remove("hidden");
+                document.getElementById("btnGenerarPdfBaterias").classList.remove("hidden");
+
+            } catch (error) {
+                // Maneja cualquier error en el formato del JSON
+                console.error('Error al convertir el JSON:', error);
+                alert('Error al convertir los datos, verifique que los nombres de los nadadores no contengan comillas');
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>

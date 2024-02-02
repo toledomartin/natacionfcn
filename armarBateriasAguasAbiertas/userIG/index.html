@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #profile {
+        width: 250px;
+        height: 250px;
+    }
+
+    div#container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .containerUser {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #eee;
+        border-radius: 17px;
+        width: 250px;
+        padding: 10px;
+    }
+</style>
+
+<body>
+
+    <div id="container">
+
+
+
+    </div>
+
+    <script>
+        window.onload = async () => {
+            let users1 = await buscarUsuarios("users1");
+            let users2 = await buscarUsuarios("users2");
+
+            let diferencias = ordenarPorUsername(obtenerDiferencias(users1, users2))
+
+            // cargarUsuarios(diferencias)
+            cargarUsuarios(users1)
+        }
+
+        function cargarUsuarios(data) {
+            data.forEach(userData => {
+
+                let html = `<div class="containerUser">
+                    <span class="titleUser">Usuario: ${userData.username}</span>
+                    <span class="titleUser">Nombre: ${userData.full_name}</span>
+                    <a href="https://www.instagram.com/${userData.username}/" class="link" target="_blank"> Link perfil</a>
+                </div>`;
+
+                container.innerHTML += html
+
+            });
+        }
+
+
+        function obtenerDiferencias(array1, array2) {
+            let diferencias = array1.filter(a1 => !array2.some(a2 => a2.id === a1.id))
+                .concat(array2.filter(a2 => !array1.some(a1 => a1.id === a2.id)));
+            return diferencias;
+        }
+
+        function ordenarPorUsername(array) {
+            array.sort((a, b) => {
+                let usernameA = a.username.toLowerCase();
+                let usernameB = b.username.toLowerCase();
+
+                if (usernameA < usernameB) {
+                    return -1;
+                }
+                if (usernameA > usernameB) {
+                    return 1;
+                }
+                return 0; // los usernames son iguales
+            });
+            return array;
+        }
+
+        function buscarUsuarios(archivo) {
+            return new Promise((resolve, reject) => {
+                fetch(`${archivo}.json`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data = data.filter(user => user.is_verified != true)
+                        ordenarPorUsername(data)
+                        resolve(data)
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            })
+
+
+        }
+    </script>
+</body>
+
+</html>

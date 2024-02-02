@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Aquí va tu CSS */
+        #floatingButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+        }
+        #chatWindow {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #f1f1f1;
+            border: none;
+            display: none;
+        }
+        #chatBubble {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            display: none;
+            font-size: 16px;
+        }
+        /* Estilos para el chat */
+        .chat-header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        .chat-messages {
+            background-color: #eee;
+            height: 300px;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+        .chat-input {
+            background-color: #ddd;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <button id="floatingButton">+</button>
+    <div id="chatWindow">
+        <div class="chat-header">Chat</div>
+        <div class="chat-messages"></div>
+        <div class="chat-input"><input type="text" placeholder="Escribe un mensaje..."></div>
+    </div>
+    <button id="chatBubble">1</button>
+
+    <script>
+        // Aquí va tu JS
+        document.getElementById('floatingButton').addEventListener('click', function() {
+            document.getElementById('chatWindow').style.display = 'block';
+            document.getElementById('floatingButton').style.display = 'none';
+            document.getElementById('chatBubble').style.display = 'block';
+        });
+
+        document.getElementById('chatBubble').addEventListener('click', function() {
+            document.getElementById('chatWindow').style.display = 'block';
+            document.getElementById('chatBubble').style.display = 'none';
+        });
+
+        // Y así sucesivamente...
+    </script>
+</body>
+</html>
