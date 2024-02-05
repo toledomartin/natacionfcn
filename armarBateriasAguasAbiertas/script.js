@@ -254,7 +254,7 @@ const tres_baterias_bateria_1 = [{
     {
         "distancia": 3000,
         "nivel": ["NACIONAL"],
-        "categoria": ["ELITE MASTER"],
+        "categoria": categoriasAficionadosReducida,
         "genero": generos,
     },
     {
