@@ -1,407 +1,224 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-  <head>
-    <title>Blog List</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="/cdn-cgi/apps/head/3ts2ksMwXvKRuG480KNifJ2_JNM.js"></script><link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CLato%7CComfortaa:300,400,700%7COpen+Sans:300,400,600,700">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/fonts.css">
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-    <div class="preloader">
-      <div class="preloader-body">
-        <div class="cssload-bell">
-          <div class="cssload-circle">
-            <div class="cssload-inner"></div>
-          </div>
-          <div class="cssload-circle">
-            <div class="cssload-inner"></div>
-          </div>
-          <div class="cssload-circle">
-            <div class="cssload-inner"></div>
-          </div>
-          <div class="cssload-circle">
-            <div class="cssload-inner"></div>
-          </div>
-          <div class="cssload-circle">
-            <div class="cssload-inner"></div>
-          </div>
+
+<head>
+  <title>Eventos</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src="/cdn-cgi/apps/head/3ts2ksMwXvKRuG480KNifJ2_JNM.js"></script>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css"
+    href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CLato%7CComfortaa:300,400,700%7COpen+Sans:300,400,600,700">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/core.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/eventos.js"></script>
+
+  <script>
+    $(function () {
+      // Cargar el encabezado en el div con id "header-container"
+      $("header").load("header.html");
+    });
+
+    $(function () {
+      // Cargar el encabezado en el div con id "header-container"
+      $("footer").load("footer.html");
+    });
+  </script>
+
+
+</head>
+
+<body>
+  <div class="preloader">
+    <div class="preloader-body">
+      <div class="cssload-bell">
+        <div class="cssload-circle">
+          <div class="cssload-inner"></div>
+        </div>
+        <div class="cssload-circle">
+          <div class="cssload-inner"></div>
+        </div>
+        <div class="cssload-circle">
+          <div class="cssload-inner"></div>
+        </div>
+        <div class="cssload-circle">
+          <div class="cssload-inner"></div>
+        </div>
+        <div class="cssload-circle">
+          <div class="cssload-inner"></div>
         </div>
       </div>
     </div>
-    <div class="page">
-      <!-- Page Header-->
-      <header class="section page-header">
-        <!-- RD Navbar-->
-        <div class="rd-navbar-wrap">
-          <nav class="rd-navbar rd-navbar-classic" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="100px" data-xl-stick-up-offset="100px" data-xxl-stick-up-offset="100px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
-            <div class="rd-navbar-main-outer">
-              <div class="rd-navbar-main">
-                <!-- RD Navbar Panel-->
-                <div class="rd-navbar-panel">
-                  <!-- RD Navbar Toggle-->
-                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
-                  <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo-default-120x45.png" alt="" width="120" height="45" srcset="images/logo-default-240x90.png 2x"/><img class="brand-logo-light" src="images/logo-inverse-119x43.png" alt="" width="119" height="43" srcset="images/logo-inverse-238x87.png 2x"/></a>
-                  </div>
-                </div>
-                <div class="rd-navbar-nav-wrap">
-                  <!-- RD Navbar Nav-->
-                  <ul class="rd-navbar-nav">
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="#">Pages</a>
-                      <!-- RD Navbar Dropdown-->
-                      <ul class="rd-menu rd-navbar-dropdown">
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="about-us.html">About Us</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="what-we-offer.html">What We Offer</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="our-team.html">Our Team</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="testimonials.html">Testimonials</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="pricing-list.html">Pricing List</a></li>
-                      </ul>
-                    </li>
-                    <li class="rd-nav-item active"><a class="rd-nav-link" href="grid-blog.html">Blog</a>
-                      <!-- RD Navbar Dropdown-->
-                      <ul class="rd-menu rd-navbar-dropdown">
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="grid-blog.html">Grid Blog</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="blog-list.html">Blog List</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="blog-post.html">Blog Post</a></li>
-                      </ul>
-                    </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="grid-gallery.html">Gallery</a>
-                      <!-- RD Navbar Dropdown-->
-                      <ul class="rd-menu rd-navbar-dropdown">
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="grid-gallery.html">Grid Gallery</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="grid-fullwidth-gallery.html">Grid Fullwidth Gallery</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="masonry-gallery.html">Masonry Gallery</a></li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="masonry-fullwidth-gallery.html">Masonry Fullwidth Gallery</a></li>
-                      </ul>
-                    </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="#">Elements</a>
-                      <!-- RD Navbar Megamenu-->
-                      <ul class="rd-menu rd-navbar-megamenu">
-                        <li class="rd-megamenu-item">
-                          <div class="rd-megamenu-title"><span class="rd-megamenu-icon mdi mdi-apps"></span><span class="rd-megamenu-text">Elements</span></div>
-                          <ul class="rd-megamenu-list rd-megamenu-list-2">
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="typography.html">Typography</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="icon-lists.html">Icon lists</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="progress-bars.html">Progress bars</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="calls-to-action.html">Calls to action</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="tabs-and-accordions.html">Tabs &amp; accordions</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="buttons.html">Buttons</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="tables.html">Tables</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="forms.html">Forms</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="counters.html">Counters</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="grid-system.html">Grid system</a></li>
-                          </ul>
-                        </li>
-                        <li class="rd-megamenu-item flex-grow-1 flex-shrink-0">
-                          <div class="rd-megamenu-title"><span class="rd-megamenu-icon mdi mdi-layers"></span><span class="rd-megamenu-text">Additional pages</span></div>
-                          <ul class="rd-megamenu-list">
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="404-page.html">404 Page</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="coming-soon.html">Coming Soon</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="privacy-policy.html">Privacy Policy</a></li>
-                            <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="search-results.html">Search Results</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="contact-us.html">Contacts</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="rd-navbar-main-element">
-                  <!-- RD Navbar Search-->
-                  <div class="rd-navbar-search rd-navbar-search-2">
-                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-3" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
-                    <form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
-                      <div class="form-wrap">
-                        <label class="form-label" for="rd-navbar-search-form-input">Search...</label>
-                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off"/>
-                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
-                        <button class="rd-search-form-submit fl-bigmug-line-search74" type="submit"></button>
-                      </div>
-                    </form>
-                  </div>
-                  <button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-open rd-navbar-fixed-element-1" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate="data-multitoggle-isolate"><span class="project-hamburger"><span class="project-hamburger-line"></span><span class="project-hamburger-line"></span><span class="project-hamburger-line"></span><span class="project-hamburger-line"></span></span></button>
-                </div>
-                <div class="rd-navbar-project">
-                  <div class="rd-navbar-project-header">
-                    <button class="rd-navbar-project-hamburger rd-navbar-project-hamburger-close" type="button" data-multitoggle=".rd-navbar-main" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate><span class="project-close"><span></span><span></span></span></button>
-                    <h5 class="rd-navbar-project-title">Our Contacts</h5>
-                  </div>
-                  <div class="rd-navbar-project-content">
-                    <div>
-                      <div>
-                        <!-- Owl Carousel-->
-                        <div class="owl-carousel" data-items="1" data-dots="true" data-autoplay="true"><img src="images/about-5-350x269.jpg" alt="" width="350" height="269"/><img src="images/about-6-350x269.jpg" alt="" width="350" height="269"/><img src="images/about-7-350x269.jpg" alt="" width="350" height="269"/>
-                        </div>
-                        <ul class="contacts-modern">
-                          <li><a href="#">523 Sylvan Ave, 5th Floor<br>Mountain View, CA 94041 USA</a></li>
-                          <li><a href="tel:#">+1 (844) 123 456 78</a></li>
-                        </ul>
-                      </div>
-                      <div>
-                        <ul class="list-inline list-social list-inline-xl">
-                          <li><a class="icon mdi mdi-facebook" href="#"></a></li>
-                          <li><a class="icon mdi mdi-twitter" href="#"></a></li>
-                          <li><a class="icon mdi mdi-instagram" href="#"></a></li>
-                          <li><a class="icon mdi mdi-google-plus" href="#"></a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </header>
-      <section class="breadcrumbs-custom">
-        <div class="parallax-container" data-parallax-img="images/bg-about.jpg">)
-          <div class="breadcrumbs-custom-body parallax-content context-dark">
-            <div class="container">
-              <h1 class="breadcrumbs-custom-title">Blog List</h1>
-            </div>
-          </div>
-        </div>
-        <div class="breadcrumbs-custom-footer">
-          <div class="container">
-            <ul class="breadcrumbs-custom-path">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="grid-blog.html">Blog</a></li>
-              <li class="active">Blog List</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- Section Shop-->
-      <section class="section section-xl bg-default text-md-start">
-        <div class="container">
-          <div class="row row-50 row-md-60">
-            <div class="col-lg-8 col-xl-9">
-              <div class="inset-xl-right-70">
-                <div class="row row-50 row-md-60 row-lg-80 row-xl-100">
-                  <div class="col-12">
-                    <!-- Post Modern-->
-                    <article class="post post-modern box-xxl">
-                      <div class="post-modern-panel">
-                        <div><a class="post-modern-tag" href="#">News</a></div>
-                        <div>
-                          <time class="post-modern-time" datetime="2021-08-09">August 9, 2021</time>
-                        </div>
-                      </div>
-                      <h3 class="post-modern-title"><a href="blog-post.html">Diving in New Caledonia: The Lagoon of All Hopes</a></h3><a class="post-modern-figure" href="blog-post.html"><img src="images/post-7-800x394.jpg" alt="" width="800" height="394"/></a>
-                      <p class="post-modern-text">Nibh tellus molestie nunc non blandit massa. Sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi. Vestibulum lectus mauris ultrices eros in cursus turpis. Posuere morbi leo urna molestie. Consequat semper viverra nam libero justo laoreet sit amet cursus. </p><a class="post-modern-link" href="blog-post.html">Read more</a>
-                    </article>
-                  </div>
-                  <div class="col-12">
-                    <!-- Post Modern-->
-                    <article class="post post-modern box-xxl">
-                      <div class="post-modern-panel">
-                        <div><a class="post-modern-tag" href="#">News</a></div>
-                        <div>
-                          <time class="post-modern-time" datetime="2021-08-09">August 9, 2021</time>
-                        </div>
-                      </div>
-                      <h3 class="post-modern-title"><a href="blog-post.html">Scuba Diving in Okinawa: A First-timer Guide</a></h3><a class="post-modern-figure" href="blog-post.html"><img src="images/post-8-800x394.jpg" alt="" width="800" height="394"/></a>
-                      <p class="post-modern-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet</p><a class="post-modern-link" href="blog-post.html">Read more</a>
-                    </article>
-                  </div>
-                  <div class="col-12">
-                    <!-- Post Modern-->
-                    <article class="post post-modern box-xxl">
-                      <div class="post-modern-panel">
-                        <div><a class="post-modern-tag" href="#">News</a></div>
-                        <div>
-                          <time class="post-modern-time" datetime="2021-08-09">August 9, 2021</time>
-                        </div>
-                      </div>
-                      <h3 class="post-modern-title"><a href="blog-post.html">Shore Diving in Maui &amp; Big Island: Hawaiian Experience</a></h3><a class="post-modern-figure" href="blog-post.html"><img src="images/post-9-800x394.jpg" alt="" width="800" height="394"/></a>
-                      <p class="post-modern-text">Neque viverra justo nec ultrices dui sapien eget. Eget dolor morbi non arcu risus. Magna sit amet purus gravida quis blandit turpis cursus. Arcu dui vivamus arcu felis bibendum. Sagittis purus sit amet volutpat consequat mauris nunc.</p><a class="post-modern-link" href="blog-post.html">Read more</a>
-                    </article>
-                  </div>
-                </div>
-                <div class="pagination-wrap">
-                  <!-- Bootstrap Pagination-->
-                  <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                      <li class="page-item page-item-control disabled"><a class="page-link" href="#" aria-label="Previous"><span class="icon" aria-hidden="true"></span></a></li>
-                      <li class="page-item active"><span class="page-link">1</span></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item page-item-control"><a class="page-link" href="#" aria-label="Next"><span class="icon" aria-hidden="true"></span></a></li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-xl-3">
-              <div class="aside row row-30 row-md-50 justify-content-md-between">
-                <div class="aside-item col-12">
-                  <div class="team-info box-sm"><a class="team-info-figure" href="#"><img src="images/user-4-123x123.jpg" alt="" width="123" height="123"/></a>
-                    <h6 class="team-info-title"><a href="#">Rebecca Harrison</a></h6>
-                    <p class="team-info-text">Sed eleifend, lacus nec bibendum pulvinar, nibh mauris vehicula augue</p>
-                  </div>
-                  <!-- RD Search Form-->
-                  <form class="rd-search form-search" action="search-results.html" method="GET">
-                    <div class="form-wrap">
-                      <label class="form-label" for="search-form">Search...</label>
-                      <input class="form-input" id="search-form" type="text" name="s" autocomplete="off">
-                      <button class="button-search fl-bigmug-line-search74" type="submit"></button>
-                    </div>
-                  </form>
-                </div>
-                <div class="aside-item col-sm-6 col-md-5 col-lg-12">
-                  <h6 class="aside-title">Categories</h6>
-                  <ul class="list-categories">
-                    <li><a href="#">All</a><span class="list-categories-number">(18)</span></li>
-                    <li><a href="#">News</a><span class="list-categories-number">(9)</span></li>
-                    <li><a href="#">Diving</a><span class="list-categories-number">(5)</span></li>
-                    <li><a href="#">Tips</a><span class="list-categories-number">(8)</span></li>
-                  </ul>
-                </div>
-                <div class="aside-item col-sm-6 col-lg-12">
-                  <h6 class="aside-title">Latest Posts</h6>
-                  <div class="row row-20 row-lg-30 gutters-10">
-                    <div class="col-6 col-lg-12">
-                      <!-- Post Minimal-->
-                      <article class="post post-minimal">
-                        <div class="unit unit-spacing-sm flex-column flex-lg-row align-items-lg-center">
-                          <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="images/post-mini-1-260x254.jpg" alt="" width="260" height="254"/></a></div>
-                          <div class="unit-body">
-                            <p class="post-minimal-title"><a href="blog-post.html">Top 5 Places to Learn Diving for Beginners</a></p>
-                            <div class="post-minimal-time">
-                              <time datetime="2021-03-15">March 15, 2021</time>
-                            </div>
-                          </div>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-6 col-lg-12">
-                      <!-- Post Minimal-->
-                      <article class="post post-minimal">
-                        <div class="unit unit-spacing-sm flex-column flex-lg-row align-items-lg-center">
-                          <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="images/post-mini-2-260x254.jpg" alt="" width="260" height="254"/></a></div>
-                          <div class="unit-body">
-                            <p class="post-minimal-title"><a href="blog-post.html">The Wonders of Papua New Guinea</a></p>
-                            <div class="post-minimal-time">
-                              <time datetime="2021-03-15">March 15, 2021</time>
-                            </div>
-                          </div>
-                        </div>
-                      </article>
-                    </div>
-                  </div>
-                </div>
-                <div class="aside-item col-sm-6 col-md-5 col-lg-12">
-                  <h6 class="aside-title">Popular tags</h6>
-                  <div class="group-sm group-tags"><a class="link-tag" href="#">News</a><a class="link-tag" href="#">Diving</a><a class="link-tag" href="#">Destinations</a><a class="link-tag" href="#">Tips</a><a class="link-tag" href="#">Equipment</a><a class="link-tag" href="#">Tours</a></div>
-                </div>
-                <div class="aside-item col-sm-6 col-lg-12">
-                  <h6 class="aside-title">Archive</h6>
-                  <ul class="list-marked list-archives d-inline-block d-md-block">
-                    <li><a href="#">March 2021</a></li>
-                    <li><a href="#">February 2021</a></li>
-                    <li><a href="#">January 2021</a></li>
-                    <li><a href="#">December 2021</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  </div>
+  <div class="page">
+    <!-- Page Header-->
+    <header class="section page-header"></header>
 
-      <!-- Page Footer-->
-      <footer class="section footer-modern footer-modern-2">
-        <div class="footer-modern-body section-xl context-dark">
+    <section class="breadcrumbs-custom">
+      <div class="parallax-container" data-parallax-img="images/bg-about.jpg">
+        <div class="breadcrumbs-custom-body parallax-content context-dark">
           <div class="container">
-            <div class="row row-40 row-md-50 justify-content-xl-between">
-              <div class="col-md-10 col-lg-3 col-xl-4 wow fadeInRight">
-                <div class="inset-xl-right-70">
-                  <h5 class="footer-modern-title">Gallery</h5>
-                  <div class="row row-10 gutters-10" data-lightgallery="group">
-                    <div class="col-4 col-sm-2 col-lg-4">
-                      <!-- Thumbnail Minimal--><a class="thumbnail-minimal" href="images/grid-fullwidth-gallery-2-1200x800-original.jpg" data-lightgallery="item"><img src="images/grid-gallery-1-93x93.jpg" alt="" width="93" height="93"/></a>
-                    </div>
-                    <div class="col-4 col-sm-2 col-lg-4">
-                      <!-- Thumbnail Minimal--><a class="thumbnail-minimal" href="images/masonry-gallery-4-1200x800-original.jpg" data-lightgallery="item"><img src="images/grid-gallery-2-93x93.jpg" alt="" width="93" height="93"/></a>
-                    </div>
-                    <div class="col-4 col-sm-2 col-lg-4">
-                      <!-- Thumbnail Minimal--><a class="thumbnail-minimal" href="images/grid-gallery-4-1200x800-original.jpg" data-lightgallery="item"><img src="images/grid-gallery-3-93x93.jpg" alt="" width="93" height="93"/></a>
-                    </div>
-                    <div class="col-4 col-sm-2 col-lg-4">
-                      <!-- Thumbnail Minimal--><a class="thumbnail-minimal" href="images/masonry-gallery-7-1200x800-original.jpg" data-lightgallery="item"><img src="images/grid-gallery-4-93x93.jpg" alt="" width="93" height="93"/></a>
-                    </div>
-                    <div class="col-4 col-sm-2 col-lg-4">
-                      <!-- Thumbnail Minimal--><a class="thumbnail-minimal" href="images/grid-gallery-5-1200x800-original.jpg" data-lightgallery="item"><img src="images/grid-gallery-5-93x93.jpg" alt="" width="93" height="93"/></a>
-                    </div>
-                    <div class="col-4 col-sm-2 col-lg-4">
-                      <!-- Thumbnail Minimal--><a class="thumbnail-minimal" href="images/grid-gallery-6-1200x800-original.jpg" data-lightgallery="item"><img src="images/grid-gallery-6-93x93.jpg" alt="" width="93" height="93"/></a>
-                    </div>
+            <h1 class="breadcrumbs-custom-title">Listado de eventos</h1>
+          </div>
+        </div>
+      </div>
+      <div class="breadcrumbs-custom-footer">
+        <div class="container">
+          <ul class="breadcrumbs-custom-path">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="grid-blog.html">Eventos</a></li>
+            <li class="active">Listado de eventos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Section Shop-->
+    <section class="section section-xl bg-default text-md-start">
+      <div class="container">
+        <div class="row row-50 row-md-60">
+          <div class="col-lg-8 col-xl-9">
+            <div class="inset-xl-right-70">
+              <div class="row row-50 row-md-60 row-lg-80 row-xl-100" id="listado-eventos-container">
+
+
+              </div>
+
+
+              <div class="pagination-wrap">
+                <!-- Bootstrap Pagination-->
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li class="page-item page-item-control disabled"><a class="page-link" href="#"
+                        aria-label="Previous"><span class="icon" aria-hidden="true"></span></a></li>
+                    <li class="page-item active"><span class="page-link">1</span></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item page-item-control"><a class="page-link" href="#" aria-label="Next"><span
+                          class="icon" aria-hidden="true"></span></a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-xl-3" style="display: none;">
+            <div class="aside row row-30 row-md-50 justify-content-md-between">
+              <div class="aside-item col-12">
+                <div class="team-info box-sm"><a class="team-info-figure" href="#"><img src="images/user-4-123x123.jpg"
+                      alt="" width="123" height="123" /></a>
+                  <h6 class="team-info-title"><a href="#">Rebecca Harrison</a></h6>
+                  <p class="team-info-text">Sed eleifend, lacus nec bibendum pulvinar, nibh mauris vehicula augue</p>
+                </div>
+                <!-- RD Search Form-->
+                <form class="rd-search form-search" action="search-results.html" method="GET">
+                  <div class="form-wrap">
+                    <label class="form-label" for="search-form">Search...</label>
+                    <input class="form-input" id="search-form" type="text" name="s" autocomplete="off">
+                    <button class="button-search fl-bigmug-line-search74" type="submit"></button>
+                  </div>
+                </form>
+              </div>
+              <div class="aside-item col-sm-6 col-md-5 col-lg-12">
+                <h6 class="aside-title">Categories</h6>
+                <ul class="list-categories">
+                  <li><a href="#">All</a><span class="list-categories-number">(18)</span></li>
+                  <li><a href="#">News</a><span class="list-categories-number">(9)</span></li>
+                  <li><a href="#">Diving</a><span class="list-categories-number">(5)</span></li>
+                  <li><a href="#">Tips</a><span class="list-categories-number">(8)</span></li>
+                </ul>
+              </div>
+              <div class="aside-item col-sm-6 col-lg-12">
+                <h6 class="aside-title">Latest Posts</h6>
+                <div class="row row-20 row-lg-30 gutters-10">
+                  <div class="col-6 col-lg-12">
+                    <!-- Post Minimal-->
+                    <article class="post post-minimal">
+                      <div class="unit unit-spacing-sm flex-column flex-lg-row align-items-lg-center">
+                        <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img
+                              src="images/post-mini-1-260x254.jpg" alt="" width="260" height="254" /></a></div>
+                        <div class="unit-body">
+                          <p class="post-minimal-title"><a href="blog-post.html">Top 5 Places to Learn Diving for
+                              Beginners</a></p>
+                          <div class="post-minimal-time">
+                            <time datetime="2021-03-15">March 15, 2021</time>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                  <div class="col-6 col-lg-12">
+                    <!-- Post Minimal-->
+                    <article class="post post-minimal">
+                      <div class="unit unit-spacing-sm flex-column flex-lg-row align-items-lg-center">
+                        <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img
+                              src="images/post-mini-2-260x254.jpg" alt="" width="260" height="254" /></a></div>
+                        <div class="unit-body">
+                          <p class="post-minimal-title"><a href="blog-post.html">The Wonders of Papua New Guinea</a></p>
+                          <div class="post-minimal-time">
+                            <time datetime="2021-03-15">March 15, 2021</time>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 col-md-7 col-lg-5 wow fadeInRight" data-wow-delay=".1s">
-                <h5 class="footer-modern-title">Quick Links</h5>
-                <ul class="footer-modern-list footer-modern-list-2 d-sm-inline-block d-md-block">
-                  <li><a href="#">Our Tours</a></li>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">FAQ</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">Instructors</a></li>
-                  <li><a href="#">Blog</a></li>
-                  <li><a href="#">Gallery Grid</a></li>
-                  <li><a href="#">Gallery Masonry</a></li>
-                </ul>
+              <div class="aside-item col-sm-6 col-md-5 col-lg-12">
+                <h6 class="aside-title">Popular tags</h6>
+                <div class="group-sm group-tags"><a class="link-tag" href="#">News</a><a class="link-tag"
+                    href="#">Diving</a><a class="link-tag" href="#">Destinations</a><a class="link-tag"
+                    href="#">Tips</a><a class="link-tag" href="#">Equipment</a><a class="link-tag" href="#">Tours</a>
+                </div>
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 wow fadeInRight" data-wow-delay=".2s">
-                <h5 class="footer-modern-title">Get in touch</h5>
-                <ul class="contacts-creative">
-                  <li>
-                    <div class="unit unit-spacing-sm flex-column flex-md-row">
-                      <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                      <div class="unit-body"><a href="#">523 Sylvan Ave, 5th Floor<br/>Mountain View, CA 94041 USA</a></div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="unit unit-spacing-sm flex-column flex-md-row">
-                      <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                      <div class="unit-body"><a href="tel:#">+1 (844) 123 456 78</a></div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="unit unit-spacing-sm flex-column flex-md-row">
-                      <div class="unit-left"><span class="icon mdi mdi-email-outline"></span></div>
-                      <div class="unit-body"><a href="mailto:#">info@demolink.org</a></div>
-                    </div>
-                  </li>
-                </ul>
-                <ul class="list-inline list-social-3 list-inline-sm">
-                  <li><a class="icon mdi mdi-facebook icon-xxs" href="#"></a></li>
-                  <li><a class="icon mdi mdi-twitter icon-xxs" href="#"></a></li>
-                  <li><a class="icon mdi mdi-instagram icon-xxs" href="#"></a></li>
-                  <li><a class="icon mdi mdi-google-plus icon-xxs" href="#"></a></li>
-                  <li><a class="icon mdi mdi-skype icon-xxs" href="#"></a></li>
+              <div class="aside-item col-sm-6 col-lg-12">
+                <h6 class="aside-title">Archive</h6>
+                <ul class="list-marked list-archives d-inline-block d-md-block">
+                  <li><a href="#">March 2021</a></li>
+                  <li><a href="#">February 2021</a></li>
+                  <li><a href="#">January 2021</a></li>
+                  <li><a href="#">December 2021</a></li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer-modern-panel text-center">
-          <div class="container">
-            <p class="rights"><span>&copy;&nbsp; </span><span class="copyright-year"></span><span>&nbsp;</span><span>Divers</span><span>.&nbsp; All rights reserved.</span><span>&nbsp;</span><a href="privacy-policy.html">Privacy Policy.</a></p>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <div class="snackbars" id="form-output-global"></div>
-    <script src="js/core.min.js"></script>
-    <script src="js/script.js"></script>
-  <!-- Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P9FT69" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P9FT69');</script><!-- End Google Tag Manager --></body>
+      </div>
+    </section>
+
+    <!-- Page Footer-->
+    <footer class="section footer-modern footer-modern-2">
+    </footer>
+  </div>
+  <div class="snackbars" id="form-output-global"></div>
+
+
+  <script>
+    cargarListadoEventos({
+      idContainer: "listado-eventos-container",
+      maxEventos: 3,
+    })
+  </script>
+  <!-- Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P9FT69" height="0"
+      width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-P9FT69');
+  </script><!-- End Google Tag Manager -->
+</body>
+
 </html>
