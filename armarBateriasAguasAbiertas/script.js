@@ -122,7 +122,7 @@ const bateria_general_data = [{
     {
         "distancia": 3000,
         "nivel": ["NACIONAL"],
-        "categoria": ["ELITE MASTER"],
+        "categoria": categoriasAficionadosReducida,
         "genero": generos,
     },
 
