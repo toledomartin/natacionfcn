@@ -355,7 +355,7 @@ function generarPdf({
     listadoNadadores = false
 }) {
 
-    if (listadoNadadores) {
+    if (listadoNadadores || resultadosCampeonato) {
         baterias = bateriasGeneral
     }else{
         baterias = formatoBateria
