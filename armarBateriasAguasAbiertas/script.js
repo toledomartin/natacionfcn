@@ -320,15 +320,15 @@ const tres_baterias_bateria_4 = [
 
 const tres_baterias = [{
         data: tres_baterias_bateria_1,
-        hora: "12.00"
+        hora: "9.30"
     },
     {
         data: tres_baterias_bateria_2,
-        hora: "13.30"
+        hora: "11.00"
     },
     {
         data: tres_baterias_bateria_3,
-        hora: "14.00"
+        hora: "11.30"
     },
     // {
     //     data: tres_baterias_bateria_4,
