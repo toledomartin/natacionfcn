@@ -18,7 +18,7 @@
         height: 250px;
     }
 
-    div#container {
+    .container {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -41,24 +41,36 @@
 
 <body>
 
-    <div id="container">
 
+    <div>
+        <h1>Quienes dejaron de seguirme</h1>
+        <div class="container" id="containerDejaron">
+        </div>
+    </div>
 
-
+    <div>
+        <h1>Quienes deje de seguir</h1>
+        <div class="container" id="containerDeje">
+        </div>
     </div>
 
     <script>
         window.onload = async () => {
-            let users1 = await buscarUsuarios("users1");
-            let users2 = await buscarUsuarios("users2");
+            let users1 = await buscarUsuarios("users4");
+            let users2 = await buscarUsuarios("users3");
 
-            let diferencias = ordenarPorUsername(obtenerDiferencias(users1, users2))
+            let {
+                dejaron,
+                deje
+            } = obtenerDiferencias(users1, users2)
 
-            // cargarUsuarios(diferencias)
-            cargarUsuarios(users1)
+
+            // cargarUsuarios(ordenarPorUsername(dejaron), "containerDejaron")
+            // cargarUsuarios(ordenarPorUsername(deje), "containerDeje")
+            cargarUsuarios(users1, "containerDejaron")
         }
 
-        function cargarUsuarios(data) {
+        function cargarUsuarios(data, continerId) {
             data.forEach(userData => {
 
                 let html = `<div class="containerUser">
@@ -67,16 +79,21 @@
                     <a href="https://www.instagram.com/${userData.username}/" class="link" target="_blank"> Link perfil</a>
                 </div>`;
 
-                container.innerHTML += html
+                document.getElementById(continerId).innerHTML += html
 
             });
         }
 
 
         function obtenerDiferencias(array1, array2) {
-            let diferencias = array1.filter(a1 => !array2.some(a2 => a2.id === a1.id))
-                .concat(array2.filter(a2 => !array1.some(a1 => a1.id === a2.id)));
-            return diferencias;
+            let dejaron = array1.filter(a1 => !array2.some(a2 => a2.id === a1.id));
+            let deje = array2.filter(a2 => !array1.some(a1 => a1.id === a2.id));
+
+
+            return {
+                dejaron,
+                deje
+            };
         }
 
         function ordenarPorUsername(array) {

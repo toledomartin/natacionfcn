@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/crearRanking.js"></script>
+    <title>Ranking</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="containerSearch">
+            <h2>Clubes</h2>
+            <div class="club-input">
+                <select name="" id="listadoClubes"></select>
+                <input type="text" name="" id="buscarNadador" placeholder="Buscar nadador...">
+            </div>
+        </div>
+        <div class="main">
+            <h1>Información de Nadadores</h1>
+            <div id="container" class="chat-container">
+                No hay Información disponible
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var CLUBES_FCN = {};
+        var timerInputBusqueda; // Variable global para almacenar el ID del temporizador
+
+        function getRanking() {
+
+            return new Promise(resolve => {
+                fetch("ranking.json")
+                    .then(peticion => peticion.json())
+                    .then((res) => {
+
+                        resolve(res)
+
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    })
+            })
+
+        }
+
+        window.onload = async () => {
+
+            CLUBES_FCN = await getRanking();
+
+            cargarOpcionesSelector(Object.keys(CLUBES_FCN), "listadoClubes")
+
+            document.getElementById("buscarNadador").addEventListener("input", iniciarBusqueda);
+
+        }
+    </script>
+</body>
+
+</html>

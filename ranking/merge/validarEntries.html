@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar entries</title>
+</head>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            width: 100%;
+            margin: 10px;
+            padding: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .containerEntrieData {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .imgContainerRanking {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .imgRanking {
+            width: 30px;
+        }
+
+        .imgRanking img {
+            width: 100%;
+        }
+
+        .hidden{
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const entriesInvalidas = JSON.parse(localStorage.getItem("entriesInvalidas"))
+
+        var traduccionEstilo = {
+            "IM": "Combinado",
+            "Fly": "Mariposa",
+            "Back": "Espalda",
+            "Breast": "Pecho",
+            "Free": "Libre",
+        }
+
+        var nadadores = {};
+
+        entriesInvalidas.forEach(entrie => {
+            let keyNadador = normalize(entrie.nombre)
+
+            if (!nadadores[keyNadador]) {
+                nadadores[keyNadador] = {
+                    nombre: entrie.nombre,
+                    club: entrie.club,
+                    entriesInvalidas: []
+                }
+            }
+
+            nadadores[keyNadador].entriesInvalidas.push(entrie)
+        });
+
+        var nadadoresOrdenadosClub = [];
+
+        Object.keys(nadadores).forEach(idNadador => {
+            let item = nadadores[idNadador]
+            nadadoresOrdenadosClub.push(item)
+        });
+
+        nadadoresOrdenadosClub.sort((a, b) => a.club.localeCompare(b.club));
+
+
+        nadadoresOrdenadosClub.forEach(item => {
+
+            let card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <h2>${item.club} - ${item.nombre}</h2>
+                ${item.entriesInvalidas.map(entry => `
+                    <div class="containerEntrieData">
+                        <h4>Inscripcion no valida</h4>
+                        <p>Distancia: ${entry.distancia}</p>
+                        <p>Tiempo: ${entry.tiempo}</p>
+                        <p>Estilo: ${traduccionEstilo [entry.estilo]}</p>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Registro Tiempos</th>
+                            <th>Fecha</th>
+                            <th>Evento</th>
+                            <th>Ranking</th>
+                        </tr>
+                        ${entry.registros
+                            .sort((a, b) => a.tiempo.localeCompare(b.tiempo))
+                            .map(registro => `
+                                <tr>
+                                    <td>${registro.tiempo}</td>
+                                    <td>${registro.fecha}</td>
+                                    <td>${registro.evento}</td>
+                                    <td class="imgContainerRanking">
+                                        <div class="imgRanking ${registro.estaEnBaseFcn ? '' : 'hidden'}">
+                                            <img src="../assets/img/logo_fcn.png">
+                                        </div>
+                                        <div class="imgRanking ${registro.estaEnBaseCadda ? '': 'hidden'}">
+                                            <img src="../assets/img/logo_cadda.png">
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')
+                        }
+                    </table>
+                `).join('<hr />')}
+            `;
+            document.body.appendChild(card);
+        });
+
+
+
+        // Función para normalizar caracteres especiales
+        function normalize(str) {
+            return str.toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2")
+                .normalize()
+                .trim()
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerSearch {
+    padding: 20px;
+    background-color: #f1f1f1;
+    margin: auto;
+}
+
+.containerSearch h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+.main h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.club-input {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.club-input select,
+.club-input input[type="text"] {
+    width: fit-content;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.chat-container {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    max-width: 100%;
+    overflow: auto;
+}
+
+
+
+.nombre {
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.club {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 0 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f9f9f9;
+}
+
+
+.containerTitle {
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.imgContainerRanking {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.imgRanking {
+    width: 30px;
+}
+
+.imgRanking img {
+    width: 100%;
+}
+
+tr.row-style-2 {
+    background: #ededed;
+}

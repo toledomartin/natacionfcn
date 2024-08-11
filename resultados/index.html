@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <title>Resultados</title>
+</head>
+
+<body>
+
+    <div id="toggleButton" class="toggle-button" onclick="toggleMenu({action: 'toggle'})">≡</div>
+
+    <div id="container-loader">
+        <div class="loader"></div>
+    </div>
+
+    
+
+    <div id="background-nav-bar" onclick="toggleMenu({action: 'close'})"></div>
+
+    <div id="nav-bar" class="hola">
+        <input id="nav-toggle" type="checkbox" checked="false" />
+        <div id="nav-header">
+            <div id="nav-title"></div>
+            <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+            <hr />
+        </div>
+        <div id="nav-content">
+
+        </div>
+    </div>
+
+
+
+    <div class="main-content">
+        <span id="main-content-instrucciones">Haga click en el icono ≡ en la parte superior derecha para abrir el menú
+            lateral y
+            seleccione un evento para ver los resultados.
+            <hr>
+            Federación cordobesa de Natación
+        </span>
+        <div id="container-body-content">
+            <div id="body-content">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu({
+            action
+        }) {
+            const navToggle = document.getElementById("nav-toggle");
+            const navBar = document.getElementById('nav-bar');
+            const backgroundNavBar = document.getElementById('background-nav-bar');
+
+            if (action == "open") navBar.classList.add('open-nav-bar');
+            if (action == "close") navBar.classList.remove('open-nav-bar');
+            if (action == "toggle") navBar.classList.toggle('open-nav-bar');
+
+            if (!navToggle.checked) navToggle.click();
+
+            if ([...navBar.classList].includes("open-nav-bar")) backgroundNavBar.classList.add(
+                "background-nav-bar-open")
+            else backgroundNavBar.classList.remove("background-nav-bar-open")
+
+
+        }
+
+        function fetchPage(url) {
+            let loader = document.getElementById("container-loader");
+            loader.classList.add("show-loader");
+
+            const opciones = {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "text/html; charset=UTF-8",
+                    'Accept-Charset': 'UTF-8'
+                }
+            };
+
+            return new Promise((resolve, reject) => {
+                // Utiliza fetch para cargar el archivo
+                fetch(`results.php?url=${url.split("/").at(-1)}`, opciones)
+                    .then(response => {
+                        if (!response.ok) {
+                            resolve(false)
+                        } else {
+                            return response.text()
+                        }
+                    })
+                    .then(res => {
+
+                        res = res.replaceAll("<p>", "")
+                        let div = document.createElement("div");
+                        div.innerHTML = res;
+
+                        loader.classList.remove("show-loader");
+                        resolve(div)
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+        }
+
+
+
+        function formatearDatosEvtIndex(evtindex) {
+            const menuTitle = document.getElementById('nav-title');
+            let tituloEvento = evtindex.querySelector("h2 font").innerHTML;
+            menuTitle.innerHTML = tituloEvento;
+
+
+            var jornadas = [];
+
+            let titulosEvento = evtindex.querySelectorAll("h3");
+
+            titulosEvento.forEach((titulo, index) => {
+
+                let primerEventoJornadaSiguiente = false;
+                let siguienteIndex = index + 1;
+
+                if (titulosEvento.length != siguienteIndex) {
+                    primerEventoJornadaSiguiente = titulosEvento[siguienteIndex].parentElement
+                        .nextElementSibling
+                }
+
+                let jornadaData = {};
+                let arrEventos = [];
+                let arrEventosAux = [];
+                let eventos = titulo.parentElement.parentElement.querySelectorAll("a");
+
+
+                let eventosCargados = jornadas.map(jornada => jornada.eventosAux).flat();
+
+                let esEventoJornada = true;
+                eventos.forEach(evento => {
+                    if (primerEventoJornadaSiguiente && evento == primerEventoJornadaSiguiente)
+                        esEventoJornada = false;
+                    if (esEventoJornada && !eventosCargados.includes(evento)) {
+                        arrEventos.push({
+                            href: evento.href,
+                            titulo: decodeURIComponent(evento.innerHTML).replaceAll("amp;", "")
+                        })
+
+                        arrEventosAux.push(evento)
+                    }
+                });
+
+                jornadaData.titulo = titulo.innerHTML.replace("<br>", "").replace("\n", "").split(" ").filter(
+                    data => data != "").join(" ");
+                jornadaData.eventos = arrEventos;
+                jornadaData.eventosAux = arrEventosAux;
+
+                jornadas.push(jornadaData)
+            });
+
+            return jornadas
+        }
+
+        function createNavButton({
+            icon,
+            content
+        }) {
+            const divEvento = document.createElement('div');
+            divEvento.classList.add('nav-button');
+
+            const divNumero = document.createElement('div');
+            divNumero.classList.add('fas');
+            divNumero.textContent = icon;
+            divEvento.appendChild(divNumero);
+
+            const spanDescripcion = document.createElement('span');
+            spanDescripcion.textContent = content;
+            divEvento.appendChild(spanDescripcion);
+
+            return divEvento
+        }
+
+        function crearMenuLateral(data) {
+
+            // Obtén el elemento con el ID "nav-content"
+            const navContent = document.getElementById('nav-content');
+
+            // Recorre el array de eventos y crea los elementos HTML
+            data.forEach(jornada => {
+
+                let divEvento = createNavButton({
+                    icon: "#",
+                    content: jornada.titulo,
+                })
+
+                // Agrega el div del evento al contenedor principal
+                navContent.appendChild(divEvento);
+
+                jornada.eventos.forEach(evento => {
+                    let divEvento = createNavButton({
+                        icon: evento.titulo.split(" ")[0],
+                        content: evento.titulo.split(" ").splice(1).join(" "),
+                    })
+
+                    // Agrega el evento de clic para llamar a la función abrirPaginaResultado
+                    divEvento.addEventListener('click', () => {
+                        abrirPaginaResultado(evento.href);
+                    });
+
+                    // Agrega el div del evento al contenedor principal
+                    navContent.appendChild(divEvento);
+
+                });
+
+                // Agrega la línea horizontal
+                const hrLinea = document.createElement('hr');
+                navContent.appendChild(hrLinea);
+
+            });
+
+            // Crea el elemento para resaltar (si es necesario)
+            const divHighlight = document.createElement('div');
+            divHighlight.id = 'nav-content-highlight';
+            navContent.appendChild(divHighlight);
+
+        }
+
+        async function abrirPaginaResultado(url) {
+            let pageResult = await fetchPage(url);
+            const bodyContent = document.getElementById("body-content");
+            const instrucciones = document.getElementById("main-content-instrucciones");
+
+            let contentPage = "No resultados para el evento seleccionado.";
+            if (pageResult) {
+                let content = pageResult.querySelector("pre");
+                contentPage = content.innerHTML;
+            }
+            instrucciones.style.display = "none";
+            bodyContent.innerHTML = contentPage;
+            toggleMenu({
+                action: "close"
+            })
+
+        }
+
+        async function registarServiceWorker() {
+            registerPushManager = await navigator.serviceWorker.register('sw.js')
+                .then(function (registration) {
+                    return registration;
+                })
+                .catch(function (error) {
+                    console.error('Fallo al registrar el Service Worker:', error);
+                });
+        }
+
+        if ('serviceWorker' in navigator) {
+            registarServiceWorker();
+        }
+
+        window.onload = async () => {
+            let evtindex = await fetchPage("evtindex.htm");
+            let jornadas = formatearDatosEvtIndex(evtindex)
+            crearMenuLateral(jornadas)
+
+
+            // Obtén todos los elementos con la clase "nav-button"
+            const navButtons = document.querySelectorAll('.nav-button');
+
+            // Itera sobre los elementos y agrega el evento de hover
+            navButtons.forEach((button, index) => {
+                button.addEventListener('mouseenter', () => {
+                    const highlight = document.getElementById('nav-content-highlight');
+                    highlight.style.top =
+                        `${16 + 45 * index}px`; // Ajusta la posición del resaltado
+                });
+
+            });
+        }
+    </script>
+</body>
+
+</html>

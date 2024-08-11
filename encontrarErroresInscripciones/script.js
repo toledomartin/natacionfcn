@@ -1,4 +1,4 @@
-const cantidadMaxInscripciones = 5;
+const cantidadMaxInscripciones = 6;
 var nadadoresEncontrados = [];
 
 function obtenerErroresInscripcion(){
