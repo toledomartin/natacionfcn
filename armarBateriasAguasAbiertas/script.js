@@ -336,8 +336,104 @@ const tres_baterias = [{
     // },
 ]
 
+// ****************************************************************************************
 
-const formatoBateria = tres_baterias
+const cinco_baterias_bateria_1 = [{
+        "distancia": 5000,
+        "nivel": ["NACIONAL"],
+        "categoria": ["ELITE NATACION"],
+        "genero": generos,
+    },
+    {
+        "distancia": 3000,
+        "nivel": ["NACIONAL"],
+        "categoria": categoriasAficionadosReducida,
+        "genero": generos,
+    },
+    {
+        "distancia": 2250,
+        "nivel": ["NACIONAL"],
+        "categoria": categoriasNatacion.concat(categoriasAficionados),
+        "genero": generos,
+    },
+    {
+        "distancia": 2250,
+        "nivel": ["PROMOCIONAL"],
+        "categoria": categoriasNatacion,
+        "genero": generos,
+    },
+    {
+        "distancia": 2250,
+        "nivel": ["AFICIONADO"],
+        "categoria": categoriasNatacion.concat(categoriasAficionadosReducida),
+        "genero": generos,
+    },
+
+];
+
+const cinco_baterias_bateria_2 = [
+
+    {
+        "distancia": 750,
+        "nivel": niveles,
+        "categoria": categoriasNatacion,
+        "genero": generos,
+    },
+
+];
+
+
+const cinco_baterias_bateria_3 = [
+    {
+        "distancia": 1500,
+        "nivel": ["AFICIONADO"],
+        "categoria": categoriasAficionadosReducida,
+        "genero": generos,
+    },
+  
+];
+
+const cinco_baterias_bateria_4 = [
+    {
+        "distancia": 1500,
+        "nivel": ["PROMOCIONAL", "AFICIONADO"],
+        "categoria": categoriasNatacion,
+        "genero": generos,
+    },
+];
+
+const cinco_baterias_bateria_5 = [
+    {
+        "distancia": 1500,
+        "nivel": ["NACIONAL"],
+        "categoria": categoriasAficionados,
+        "genero": generos,
+    },
+];
+
+const cinco_baterias = [{
+        data: cinco_baterias_bateria_1,
+        hora: "9.30"
+    },
+    {
+        data: cinco_baterias_bateria_2,
+        hora: "11.00"
+    },
+    {
+        data: cinco_baterias_bateria_3,
+        hora: "11.30"
+    },
+    {
+        data: cinco_baterias_bateria_4,
+        hora: "12.15"
+    },
+    {
+        data: cinco_baterias_bateria_5,
+        hora: "13.00"
+    },
+]
+
+const formatoBateria = cinco_baterias
 // ************************************************************************************************
 
 var baterias = formatoBateria;
