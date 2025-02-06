@@ -449,15 +449,15 @@ const cinco_baterias = [{
     },
     {
         data: cinco_baterias_bateria_3,
-        hora: "11.30"
+        hora: "12.00"
     },
     {
         data: cinco_baterias_bateria_4,
-        hora: "12.15"
+        hora: "12.30"
     },
     {
         data: cinco_baterias_bateria_5,
-        hora: "13.00"
+        hora: "13.15"
     },
 ]
 
