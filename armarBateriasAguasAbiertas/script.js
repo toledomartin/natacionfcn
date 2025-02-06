@@ -292,8 +292,7 @@ const tres_baterias_bateria_2 = [
 ];
 
 
-const tres_baterias_bateria_3 = [
-    {
+const tres_baterias_bateria_3 = [{
         "distancia": 1500,
         "nivel": ["AFICIONADO"],
         "categoria": categoriasAficionadosReducida,
@@ -314,7 +313,7 @@ const tres_baterias_bateria_3 = [
 ];
 
 const tres_baterias_bateria_4 = [
-  
+
 ];
 
 
@@ -352,26 +351,47 @@ const cinco_baterias_bateria_1 = [{
     },
     {
         "distancia": 2250,
-        "nivel": ["NACIONAL"],
-        "categoria": categoriasNatacion.concat(categoriasAficionados),
-        "genero": generos,
-    },
-    {
-        "distancia": 2250,
         "nivel": ["PROMOCIONAL"],
         "categoria": categoriasNatacion,
         "genero": generos,
     },
     {
         "distancia": 2250,
+        "nivel": ["NACIONAL"],
+        "categoria": categoriasNatacion.concat(categoriasAficionados),
+        "genero": generos,
+    },
+    {
+        "distancia": 2250,
         "nivel": ["AFICIONADO"],
-        "categoria": categoriasNatacion.concat(categoriasAficionadosReducida),
+        "categoria": [
+            "PRE MASTER",
+            "CATEGORIA 1",
+        ],
         "genero": generos,
     },
 
 ];
 
 const cinco_baterias_bateria_2 = [
+ 
+    {
+        "distancia": 2250,
+        "nivel": ["AFICIONADO"],
+        "categoria": [
+            "CATEGORIA 2",
+            "CATEGORIA 3",
+            "CATEGORIA 4",
+            "CATEGORIA 5",
+            "CATEGORIA 6",
+            "CATEGORIA 7",
+        ],
+        "genero": generos,
+    },
+];
+
+// Aca irian los de 1500
+const cinco_baterias_bateria_3 = [
 
     {
         "distancia": 750,
@@ -382,18 +402,15 @@ const cinco_baterias_bateria_2 = [
 
 ];
 
-
-const cinco_baterias_bateria_3 = [
-    {
+const cinco_baterias_bateria_4 = [{
         "distancia": 1500,
         "nivel": ["AFICIONADO"],
-        "categoria": categoriasAficionadosReducida,
+        "categoria": [
+            "PRE MASTER",
+            "CATEGORIA 1",
+        ],
         "genero": generos,
     },
-  
-];
-
-const cinco_baterias_bateria_4 = [
     {
         "distancia": 1500,
         "nivel": ["PROMOCIONAL", "AFICIONADO"],
@@ -402,14 +419,25 @@ const cinco_baterias_bateria_4 = [
     },
 ];
 
-const cinco_baterias_bateria_5 = [
-    {
-        "distancia": 1500,
-        "nivel": ["NACIONAL"],
-        "categoria": categoriasAficionados,
-        "genero": generos,
-    },
-];
+const cinco_baterias_bateria_5 = [{
+    "distancia": 1500,
+    "nivel": ["AFICIONADO"],
+    "categoria": [
+        "CATEGORIA 2",
+        "CATEGORIA 3",
+        "CATEGORIA 4",
+        "CATEGORIA 5",
+        "CATEGORIA 6",
+        "CATEGORIA 7",
+    ],
+    "genero": generos,
+}, 
+{
+    "distancia": 1500,
+    "nivel": ["NACIONAL"],
+    "categoria": categoriasAficionados,
+    "genero": generos,
+},];
 
 const cinco_baterias = [{
         data: cinco_baterias_bateria_1,
@@ -453,7 +481,7 @@ function generarPdf({
 
     if (listadoNadadores || resultadosCampeonato) {
         baterias = bateriasGeneral
-    }else{
+    } else {
         baterias = formatoBateria
     }
 
@@ -475,18 +503,18 @@ function generarPdf({
         renglonPDF -= 5;
         añadirTextoAPdf(doc, nombreEvento, (doc.internal.pageSize.width / 2) - 40, 20, "negrita", true)
 
-        
+
         if (listadoNadadores) {
             añadirTextoAPdf(doc, 'Listado Campeonato', (doc.internal.pageSize.width / 2) - 35, 20, "negrita", true)
         } else {
-            if (resultadosCampeonato ) {
+            if (resultadosCampeonato) {
                 añadirTextoAPdf(doc, 'Resultados Campeonato', (doc.internal.pageSize.width / 2) - 35, 20, "negrita", true)
             } else {
                 añadirTextoAPdf(doc, 'Listado de nadadores', (doc.internal.pageSize.width / 2) - 35, 20, "negrita", true)
             }
         }
-        
-     
+
+
 
         let nadadoresEnPdf = [];
 
@@ -616,7 +644,7 @@ function generarPdf({
                                 }
                             }
 
-                           
+
                             // renglonPDF+= 10;
 
                         });
