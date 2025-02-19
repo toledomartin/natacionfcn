@@ -319,15 +319,15 @@ const tres_baterias_bateria_4 = [
 
 const tres_baterias = [{
         data: tres_baterias_bateria_1,
-        hora: "9.30"
+        hora: "12.00"
     },
     {
         data: tres_baterias_bateria_2,
-        hora: "11.00"
+        hora: "13.30"
     },
     {
         data: tres_baterias_bateria_3,
-        hora: "11.30"
+        hora: "14.00"
     },
     // {
     //     data: tres_baterias_bateria_4,
@@ -461,7 +461,7 @@ const cinco_baterias = [{
     },
 ]
 
-const formatoBateria = cinco_baterias
+const formatoBateria = tres_baterias;
 // ************************************************************************************************
 
 var baterias = formatoBateria;

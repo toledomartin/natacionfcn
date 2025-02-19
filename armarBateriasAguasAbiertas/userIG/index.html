@@ -56,8 +56,8 @@
 
     <script>
         window.onload = async () => {
-            let users1 = await buscarUsuarios("users4");
-            let users2 = await buscarUsuarios("users3");
+            let users1 = await buscarUsuarios("users_new");
+            let users2 = await buscarUsuarios("users_old");
 
             let {
                 dejaron,
@@ -65,9 +65,9 @@
             } = obtenerDiferencias(users1, users2)
 
 
-            // cargarUsuarios(ordenarPorUsername(dejaron), "containerDejaron")
-            // cargarUsuarios(ordenarPorUsername(deje), "containerDeje")
-            cargarUsuarios(users1, "containerDejaron")
+            cargarUsuarios(ordenarPorUsername(dejaron), "containerDejaron")
+            cargarUsuarios(ordenarPorUsername(deje), "containerDeje")
+            // cargarUsuarios(users1, "containerDejaron")
         }
 
         function cargarUsuarios(data, continerId) {
