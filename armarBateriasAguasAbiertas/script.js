@@ -292,10 +292,16 @@ const tres_baterias_bateria_2 = [
 ];
 
 
-const tres_baterias_bateria_3 = [{
+const tres_baterias_bateria_3 = [
+    {
         "distancia": 1500,
         "nivel": ["AFICIONADO"],
-        "categoria": categoriasAficionadosReducida,
+        "categoria": [
+            "PRE MASTER",
+            "CATEGORIA 1",
+            "CATEGORIA 2",
+            "CATEGORIA 3",
+        ],
         "genero": generos,
     },
     {
@@ -304,16 +310,26 @@ const tres_baterias_bateria_3 = [{
         "categoria": categoriasNatacion,
         "genero": generos,
     },
+];
+
+const tres_baterias_bateria_4 = [
+    {
+        "distancia": 1500,
+        "nivel": ["AFICIONADO"],
+        "categoria": [
+            "CATEGORIA 4",
+            "CATEGORIA 5",
+            "CATEGORIA 6",
+            "CATEGORIA 7",
+        ],
+        "genero": generos,
+    }, 
     {
         "distancia": 1500,
         "nivel": ["NACIONAL"],
         "categoria": categoriasAficionados,
         "genero": generos,
     },
-];
-
-const tres_baterias_bateria_4 = [
-
 ];
 
 
@@ -329,10 +345,10 @@ const tres_baterias = [{
         data: tres_baterias_bateria_3,
         hora: "14.00"
     },
-    // {
-    //     data: tres_baterias_bateria_4,
-    //     hora: "12.15"
-    // },
+    {
+        data: tres_baterias_bateria_4,
+        hora: "14.45"
+    },
 ]
 
 // ****************************************************************************************
