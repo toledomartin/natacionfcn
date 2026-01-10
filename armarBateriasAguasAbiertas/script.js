@@ -310,9 +310,6 @@ const tres_baterias_bateria_3 = [
         "categoria": categoriasNatacion,
         "genero": generos,
     },
-];
-
-const tres_baterias_bateria_4 = [
     {
         "distancia": 1500,
         "nivel": ["AFICIONADO"],
@@ -335,20 +332,20 @@ const tres_baterias_bateria_4 = [
 
 const tres_baterias = [{
         data: tres_baterias_bateria_1,
-        hora: "12.00"
+        hora: "09.30"
     },
     {
         data: tres_baterias_bateria_2,
-        hora: "13.30"
+        hora: "11.00"
     },
     {
         data: tres_baterias_bateria_3,
-        hora: "14.00"
+        hora: "11.20"
     },
-    {
-        data: tres_baterias_bateria_4,
-        hora: "14.45"
-    },
+    //{
+    //    data: tres_baterias_bateria_4,
+    //    hora: "14.45"
+    //},
 ]
 
 // ****************************************************************************************

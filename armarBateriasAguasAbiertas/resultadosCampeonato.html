@@ -114,7 +114,7 @@
 
         <script>
             const cantidadMinimaEventosParaPremiacionGeneral =
-                3; //seria la cantidad minima de eventos que tiene que tener el nadador para entrar en el ranking
+                2; //seria la cantidad minima de eventos que tiene que tener el nadador para entrar en el ranking
             const cantidadEventosConMejorPuntaje =
                 3; // seria la cantidad de eventos que se tienen en cuenta para el ranking
 
@@ -173,12 +173,12 @@
                 }
                 localStorage.setItem("nombreCompetencia", nombreCompetencia)
 
-                if (cantidadEventosConMejorPuntaje > cantidadMinimaEventosParaPremiacionGeneral) {
-                    alert(
-                        "La cantidad de eventos a incluir con mejor puntaje no puede ser mayor a la cantidad minima de eventos para la premiacion general"
-                    )
-                    return;
-                }
+                // if (cantidadEventosConMejorPuntaje > cantidadMinimaEventosParaPremiacionGeneral) {
+                //     alert(
+                //         "La cantidad de eventos a incluir con mejor puntaje no puede ser mayor a la cantidad minima de eventos para la premiacion general"
+                //     )
+                //     return;
+                // }
 
                 // var participantes = [nadadores, nadadoresAlmafuerte, nadadoresBocaDeRio, nadadoresRumipal]
 
