@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <script src="configuradorBaterias.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="natacion.css">
+
+    <title>Configurador de Baterias</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="configurador-header">
+            <a href="index.html" class="btn-volver">← Volver</a>
+            <h1>Configurador de Baterias</h1>
+        </div>
+
+        <div class="configuracion-baterias-container">
+
+            <!-- Configuración Global -->
+            <div class="config-global-section">
+                <h3>Configuracion General</h3>
+
+                <div class="config-global-row">
+                    <div class="config-global-item">
+                        <label>Tipo de Categorias Aficionados:</label>
+                        <select id="tipoAficionadosSelect">
+                            <option value="reducida">Reducida (PRE MASTER, CATEGORIA 1-7)</option>
+                            <option value="completa">Completa (PRE MASTER, MASTER A-Q)</option>
+                        </select>
+                        <small>Al cambiar se eliminaran categorias incompatibles</small>
+                    </div>
+
+                    <div class="config-global-item">
+                        <label>Cargar formato predefinido:</label>
+                        <div class="formato-selector-inline">
+                            <select id="formatoPredefinido">
+                                <option value="">-- Seleccionar --</option>
+                                <option value="tres_baterias">3 Baterias</option>
+                                <option value="cuatro_baterias">4 Baterias</option>
+                                <option value="cinco_baterias">5 Baterias</option>
+                            </select>
+                            <button id="btnCargarFormato" class="secondary-button">Cargar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-global-row">
+                    <div class="config-global-item">
+                        <label>Exportar / Importar:</label>
+                        <div class="export-import-buttons">
+                            <button id="btnExportarConfig" class="btn-exportar">Descargar Configuracion</button>
+                            <button id="btnImportarConfig" class="btn-importar">Importar Configuracion</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="erroresDuplicados" class="duplicado-warning hidden"></div>
+
+            <div id="bateriasEditor"></div>
+
+            <div class="baterias-actions">
+                <button id="btnAgregarBateria" class="secondary-button">+ Agregar Bateria</button>
+                <button id="btnGuardarConfiguracion" class="primary-button">Guardar Configuracion</button>
+                <button id="btnResetearConfiguracion" class="btn-resetear">Resetear</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            inicializarConfigurador();
+        }
+    </script>
+</body>
+
+</html>

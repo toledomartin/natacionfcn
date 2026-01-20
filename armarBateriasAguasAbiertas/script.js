@@ -342,10 +342,6 @@ const tres_baterias = [{
         data: tres_baterias_bateria_3,
         hora: "11.20"
     },
-    //{
-    //    data: tres_baterias_bateria_4,
-    //    hora: "14.45"
-    //},
 ]
 
 // ****************************************************************************************
@@ -477,7 +473,20 @@ const cinco_baterias = [{
 const formatoBateria = tres_baterias;
 // ************************************************************************************************
 
-var baterias = formatoBateria;
+// Función para obtener el formato de baterías (desde localStorage o default)
+function obtenerFormatoBaterias() {
+    const guardado = localStorage.getItem("configuracionBaterias");
+    if (guardado) {
+        try {
+            return JSON.parse(guardado);
+        } catch (e) {
+            console.error("Error al cargar configuración de baterías:", e);
+        }
+    }
+    return formatoBateria;
+}
+
+var baterias = obtenerFormatoBaterias();
 
 var nadadoresQueFaltanMostrar = [];
 var recuentoDeNadadores = document.createElement("div")
@@ -495,7 +504,7 @@ function generarPdf({
     if (listadoNadadores || resultadosCampeonato) {
         baterias = bateriasGeneral
     } else {
-        baterias = formatoBateria
+        baterias = obtenerFormatoBaterias()
     }
 
     console.log(baterias)
