@@ -27,6 +27,7 @@ const categoriasNatacion = [
     "JUVENIL 1",
     "JUVENIL 2",
     "MAYOR",
+    "JUNIOR",
     "PRIMERA"
 ];
 
@@ -121,18 +122,29 @@ const bateria_general_data = [{
 
     {
         "distancia": 3000,
-        "nivel": ["NACIONAL"],
-        "categoria": categoriasAficionadosReducida,
+        "nivel": ["NACIONAL","AFICIONADO"],
+        "categoria": categoriasNatacion.concat(categoriasAficionadosReducida),
         "genero": generos,
     },
 
     {
         "distancia": 5000,
         "nivel": ["NACIONAL"],
-        "categoria": ["ELITE NATACION"],
+        "categoria": categoriasNatacion.concat(["ELITE NATACION"]),
         "genero": generos,
     },
-
+    {
+        "distancia": 7500,
+        "nivel": ["NACIONAL"],
+        "categoria": categoriasNatacion,
+        "genero": generos,
+    },
+    {
+        "distancia": 10000,
+        "nivel": ["NACIONAL"],
+        "categoria": categoriasNatacion,
+        "genero": generos,
+    },
 ];
 
 const bateriasGeneral = [{
