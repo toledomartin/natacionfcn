@@ -532,19 +532,21 @@ function generarPdf({
         doc.setFontSize(15);
         doc.setFontType('bold');
         if (resultadosCampeonato !== true) {
-            doc.text('Bateria de largadas ', (doc.internal.pageSize.width / 2) - 22, 20);
+            const texto = 'Bateria de largadas';
+            const anchoTexto = doc.getStringUnitWidth(texto) * 15 / doc.internal.scaleFactor;
+            doc.text(texto, (doc.internal.pageSize.width - anchoTexto) / 2, 20);
         }
         renglonPDF -= 5;
-        añadirTextoAPdf(doc, nombreEvento, (doc.internal.pageSize.width / 2) - 40, 20, "negrita", true)
+        añadirTextoAPdf(doc, nombreEvento, 0, 20, "negrita", true, true)
 
 
         if (listadoNadadores) {
-            añadirTextoAPdf(doc, 'Listado Campeonato', (doc.internal.pageSize.width / 2) - 35, 20, "negrita", true)
+            añadirTextoAPdf(doc, 'Listado Campeonato', 0, 20, "negrita", true, true)
         } else {
             if (resultadosCampeonato) {
-                añadirTextoAPdf(doc, 'Resultados Campeonato', (doc.internal.pageSize.width / 2) - 35, 20, "negrita", true)
+                añadirTextoAPdf(doc, 'Resultados Campeonato', 0, 20, "negrita", true, true)
             } else {
-                añadirTextoAPdf(doc, 'Listado de nadadores', (doc.internal.pageSize.width / 2) - 35, 20, "negrita", true)
+                añadirTextoAPdf(doc, 'Listado de nadadores', 0, 20, "negrita", true, true)
             }
         }
 
@@ -555,7 +557,7 @@ function generarPdf({
         baterias.forEach((bateria, nroBateria) => {
             if (!listadoNadadores && resultadosCampeonato !== true) {
                 renglonPDF += 5;
-                añadirTextoAPdf(doc, `${nroBateria + 1}° Bateria ${bateria.hora} Hs.`, (doc.internal.pageSize.width / 2) - 30, 20, "negrita", true)
+                añadirTextoAPdf(doc, `${nroBateria + 1}° Bateria ${bateria.hora} Hs.`, 0, 20, "negrita", true, true)
                 renglonPDF += 5;
             }
 
@@ -824,12 +826,18 @@ function añadirTablaAPdf(pdf, titulosTabla, bodyTable, themeTable) {
 
 }
 
-function añadirTextoAPdf(pdf, texto, posicionY, tamañoLetra, tipoLetra, sumarRenglon) {
+function añadirTextoAPdf(pdf, texto, posicionX, tamañoLetra, tipoLetra, sumarRenglon, centrar) {
     if (tipoLetra == "negrita") tipoLetra = "bold";
 
     pdf.setFontSize(tamañoLetra);
     pdf.setFontType(tipoLetra);
-    pdf.text(texto, posicionY, renglonPDF);
+    if (centrar) {
+        const anchoTexto = pdf.getStringUnitWidth(texto) * tamañoLetra / pdf.internal.scaleFactor;
+        const x = (pdf.internal.pageSize.width - anchoTexto) / 2;
+        pdf.text(texto, x, renglonPDF);
+    } else {
+        pdf.text(texto, posicionX, renglonPDF);
+    }
 
     if (sumarRenglon) renglonPDF += 7;
 
