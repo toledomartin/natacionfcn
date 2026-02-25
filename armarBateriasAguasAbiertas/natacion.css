@@ -346,11 +346,23 @@
     }
 
     .baterias-actions {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
         display: flex;
         justify-content: center;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 12px;
+        padding: 14px 20px;
+        background-color: #fff;
+        box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.12);
+        z-index: 100;
         flex-wrap: wrap;
+    }
+
+    /* Espacio para que el contenido no quede tapado por la barra fija */
+    .configuracion-baterias-container {
+        padding-bottom: 80px;
     }
 
     .btn-resetear {
@@ -663,10 +675,110 @@
         }
 
         .baterias-actions {
-            flex-direction: column;
+            flex-direction: row;
+            gap: 8px;
+            padding: 10px 12px;
         }
 
         .baterias-actions button {
-            width: 100%;
+            flex: 1;
         }
     }
+
+/* =====================================================
+   CATEGORÍAS PERSONALIZADAS
+   ===================================================== */
+
+.config-global-item-full {
+    flex: 100%;
+    min-width: 100%;
+}
+
+.nueva-categoria-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nueva-categoria-form input {
+    flex: 1;
+    max-width: 300px;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.btn-agregar-personalizada {
+    background-color: #9b59b6 !important;
+    color: white;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    white-space: nowrap;
+}
+
+.btn-agregar-personalizada:hover {
+    background-color: #8e44ad !important;
+}
+
+.lista-categorias-personalizadas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 10px;
+    min-height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.categorias-personalizadas-empty {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
+    align-self: center;
+}
+
+.categoria-personalizada-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background-color: #f3e6fa;
+    border: 1px solid #9b59b6;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6c3483;
+}
+
+.btn-eliminar-personalizada {
+    background: #e74c3c !important;
+    color: white !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+    line-height: 20px !important;
+    text-align: center !important;
+    min-width: unset !important;
+    cursor: pointer;
+}
+
+.btn-eliminar-personalizada:hover {
+    background-color: #c0392b !important;
+}
+
+.categoria-grupo-header-personalizada {
+    background-color: #9b59b6 !important;
+}
+
+.btn-grupo-personalizada {
+    background-color: #9b59b6 !important;
+}
+
+.btn-grupo-personalizada:hover {
+    background-color: #8e44ad !important;
+}

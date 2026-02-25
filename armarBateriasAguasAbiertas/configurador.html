@@ -61,6 +61,25 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="config-global-row">
+                    <div class="config-global-item config-global-item-full">
+                        <label>Crear Categoria Personalizada:</label>
+                        <div class="nueva-categoria-form">
+                            <input type="text"
+                                   id="inputNuevaCategoriaPersonalizada"
+                                   placeholder="Ej: VETERANOS"
+                                   maxlength="50">
+                            <button id="btnAgregarCategoriaPersonalizada" class="btn-agregar-personalizada">
+                                + Agregar
+                            </button>
+                        </div>
+                        <small>Las categorias se guardan localmente. Apareceran en cada configuracion de bateria.</small>
+                        <div id="listaCategoriasPersonalizadas" class="lista-categorias-personalizadas">
+                            <span class="categorias-personalizadas-empty">No hay categorias personalizadas</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="erroresDuplicados" class="duplicado-warning hidden"></div>

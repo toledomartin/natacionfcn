@@ -18,6 +18,12 @@ const puntaje = {
 
 const categoriasNatacion = [
     "INFANTIL",
+    "MENOR",
+    "CADETE",
+    "JUVENIL",
+    "MAYOR",
+    "JUNIOR",
+    "PRIMERA",
     "INFANTIL 1",
     "INFANTIL 2",
     "MENOR 1",
@@ -26,9 +32,6 @@ const categoriasNatacion = [
     "CADETE 2",
     "JUVENIL 1",
     "JUVENIL 2",
-    "MAYOR",
-    "JUNIOR",
-    "PRIMERA"
 ];
 
 const categoriasAficionadosReducida = [

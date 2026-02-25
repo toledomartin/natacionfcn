@@ -8,6 +8,9 @@ let bateriasEnEdicion = [];
 // Tipo de categorías aficionados seleccionado: "completa" o "reducida"
 let tipoAficionados = localStorage.getItem("tipoAficionados") || "reducida";
 
+// Categorías creadas por el usuario en tiempo de ejecución
+let categoriasPersonalizadas = [];
+
 // Grupos de categorías organizados
 const gruposCategorias = {
     "categoriasNatacion": {
@@ -56,8 +59,96 @@ function guardarConfiguracionBaterias(config) {
     localStorage.setItem("configuracionBaterias", JSON.stringify(config));
 }
 
+function cargarCategoriasPersonalizadas() {
+    const guardado = localStorage.getItem("categoriasPersonalizadas");
+    if (guardado) {
+        try {
+            return JSON.parse(guardado);
+        } catch (e) {
+            console.error("Error al cargar categorías personalizadas:", e);
+        }
+    }
+    return [];
+}
+
+function guardarCategoriasPersonalizadas(categorias) {
+    localStorage.setItem("categoriasPersonalizadas", JSON.stringify(categorias));
+}
+
 function clonarBaterias(baterias) {
     return JSON.parse(JSON.stringify(baterias));
+}
+
+// =====================================================
+// GESTIÓN DE CATEGORÍAS PERSONALIZADAS
+// =====================================================
+
+function agregarCategoriaPersonalizada(nombre) {
+    const nombreLimpio = nombre.trim().toUpperCase();
+
+    if (!nombreLimpio) {
+        alert("El nombre de la categoría no puede estar vacío");
+        return;
+    }
+
+    const todasLasCategorias = [
+        ...categoriasNatacion,
+        "ELITE NATACION",
+        ...categoriasAficionados,
+        ...categoriasAficionadosReducida,
+        ...categoriasPersonalizadas
+    ];
+
+    if (todasLasCategorias.includes(nombreLimpio)) {
+        alert(`La categoría "${nombreLimpio}" ya existe`);
+        return;
+    }
+
+    categoriasPersonalizadas.push(nombreLimpio);
+    guardarCategoriasPersonalizadas(categoriasPersonalizadas);
+    renderizarPanelCategoriasPersonalizadas();
+    renderizarEditor();
+}
+
+function eliminarCategoriaPersonalizada(nombre) {
+    if (!confirm(`¿Eliminar la categoría "${nombre}"? Se quitará de todas las configuraciones actuales.`)) {
+        return;
+    }
+
+    categoriasPersonalizadas = categoriasPersonalizadas.filter(c => c !== nombre);
+    guardarCategoriasPersonalizadas(categoriasPersonalizadas);
+
+    bateriasEnEdicion.forEach(bateria => {
+        bateria.data.forEach(config => {
+            if (config.categoria) {
+                config.categoria = config.categoria.filter(c => c !== nombre);
+            }
+        });
+    });
+
+    renderizarPanelCategoriasPersonalizadas();
+    renderizarEditor();
+}
+
+function renderizarPanelCategoriasPersonalizadas() {
+    const lista = document.getElementById("listaCategoriasPersonalizadas");
+    if (!lista) return;
+
+    if (categoriasPersonalizadas.length === 0) {
+        lista.innerHTML = '<span class="categorias-personalizadas-empty">No hay categorias personalizadas</span>';
+        return;
+    }
+
+    lista.innerHTML = categoriasPersonalizadas.map(cat => `
+        <div class="categoria-personalizada-item">
+            <span>${cat}</span>
+            <button class="btn-eliminar-personalizada"
+                    onclick="eliminarCategoriaPersonalizada('${cat}')"
+                    title="Eliminar categoría">
+                ✕
+            </button>
+        </div>
+    `).join('');
 }
 
 // =====================================================
@@ -67,6 +158,7 @@ function clonarBaterias(baterias) {
 function exportarConfiguracion() {
     const config = {
         tipoAficionados: tipoAficionados,
+        categoriasPersonalizadas: categoriasPersonalizadas,
         baterias: bateriasEnEdicion
     };
 
@@ -105,6 +197,27 @@ function importarConfiguracion() {
 
                 if (config.baterias && Array.isArray(config.baterias)) {
                     bateriasEnEdicion = config.baterias;
+
+                    // Restaurar categorías personalizadas
+                    if (Array.isArray(config.categoriasPersonalizadas)) {
+                        categoriasPersonalizadas = config.categoriasPersonalizadas;
+                    } else {
+                        // Fallback para archivos viejos: detectar categorías desconocidas
+                        const todasConocidas = [
+                            ...categoriasNatacion, "ELITE NATACION",
+                            ...categoriasAficionados, ...categoriasAficionadosReducida
+                        ];
+                        const detectadas = new Set();
+                        config.baterias.forEach(b => b.data.forEach(c => {
+                            (c.categoria || []).forEach(cat => {
+                                if (!todasConocidas.includes(cat)) detectadas.add(cat);
+                            });
+                        }));
+                        categoriasPersonalizadas = [...detectadas];
+                    }
+                    guardarCategoriasPersonalizadas(categoriasPersonalizadas);
+                    renderizarPanelCategoriasPersonalizadas();
+
                     renderizarEditor();
                     alert("Configuración importada correctamente");
                 } else {
@@ -125,31 +238,43 @@ function importarConfiguracion() {
 // GESTIÓN DE TIPO DE AFICIONADOS
 // =====================================================
 
+function aplicarFiltroAficionados(tipo) {
+    const categoriasValidas = tipo === "completa" ? categoriasAficionados : categoriasAficionadosReducida;
+
+    bateriasEnEdicion.forEach(bateria => {
+        bateria.data.forEach(config => {
+            if (config.categoria) {
+                config.categoria = config.categoria.filter(cat => {
+                    if (categoriasNatacion.includes(cat) || cat === "ELITE NATACION") return true;
+                    if (categoriasPersonalizadas.includes(cat)) return true;
+                    return categoriasValidas.includes(cat);
+                });
+            }
+        });
+    });
+}
+
 function cambiarTipoAficionados(nuevoTipo) {
     if (nuevoTipo === tipoAficionados) return;
 
-    const categoriasAntiguas = tipoAficionados === "completa" ? categoriasAficionados : categoriasAficionadosReducida;
+    // Contar cuántas categorías se eliminarán antes de filtrar
     const categoriasNuevas = nuevoTipo === "completa" ? categoriasAficionados : categoriasAficionadosReducida;
-
-    // Limpiar categorías incompatibles de todas las configuraciones
     let cambiosRealizados = 0;
     bateriasEnEdicion.forEach(bateria => {
         bateria.data.forEach(config => {
             if (config.categoria) {
-                const categoriasOriginales = config.categoria.length;
-                // Filtrar: mantener categorías de natación + ELITE + las nuevas de aficionados
-                config.categoria = config.categoria.filter(cat => {
-                    // Si es categoría de natación o ELITE, mantener
-                    if (categoriasNatacion.includes(cat) || cat === "ELITE NATACION") {
-                        return true;
+                config.categoria.forEach(cat => {
+                    if (!categoriasNatacion.includes(cat) && cat !== "ELITE NATACION"
+                        && !categoriasPersonalizadas.includes(cat)
+                        && !categoriasNuevas.includes(cat)) {
+                        cambiosRealizados++;
                     }
-                    // Si es categoría de aficionados, solo mantener si está en las nuevas
-                    return categoriasNuevas.includes(cat);
                 });
-                cambiosRealizados += categoriasOriginales - config.categoria.length;
             }
         });
     });
+
+    aplicarFiltroAficionados(nuevoTipo);
 
     tipoAficionados = nuevoTipo;
     localStorage.setItem("tipoAficionados", tipoAficionados);
@@ -296,6 +421,9 @@ function renderizarConfiguracionHTML(config, bateriaIndex, configIndex) {
     // Categorías de aficionados según el tipo seleccionado
     const categoriasAficionadosActual = obtenerCategoriasAficionados();
 
+    // ¿Hay categorías personalizadas?
+    const hayPersonalizadas = categoriasPersonalizadas.length > 0;
+
     return `
         <div class="configuracion-card" id="config-${bateriaIndex}-${configIndex}">
             <div class="config-header">
@@ -361,6 +489,11 @@ function renderizarConfiguracionHTML(config, bateriaIndex, configIndex) {
                                 onclick="seleccionarGrupoAficionados(${bateriaIndex}, ${configIndex})">
                             + Aficionados
                         </button>
+                        ${hayPersonalizadas ? `
+                        <button type="button" class="btn-grupo btn-grupo-personalizada"
+                                onclick="seleccionarGrupoPersonalizadas(${bateriaIndex}, ${configIndex})">
+                            + Personalizadas
+                        </button>` : ''}
                         <button type="button" class="btn-limpiar"
                                 onclick="deseleccionarTodasCategorias(${bateriaIndex}, ${configIndex})">
                             Limpiar
@@ -402,6 +535,27 @@ function renderizarConfiguracionHTML(config, bateriaIndex, configIndex) {
                             `).join('')}
                         </div>
                     </div>
+
+                    <!-- Grupo: Categorías Personalizadas (condicional) -->
+                    ${hayPersonalizadas ? `
+                    <div class="categoria-grupo">
+                        <div class="categoria-grupo-header categoria-grupo-header-personalizada">
+                            Categorias Personalizadas
+                        </div>
+                        <div class="categorias-checkboxes" id="categorias-personalizadas-${bateriaIndex}-${configIndex}">
+                            ${categoriasPersonalizadas.map(cat => `
+                                <label class="categoria-checkbox-label">
+                                    <input type="checkbox"
+                                           value="${cat}"
+                                           data-grupo="personalizada"
+                                           ${categoriasSeleccionadas.includes(cat) ? 'checked' : ''}
+                                           onchange="toggleCategoria(${bateriaIndex}, ${configIndex}, '${cat}', this.checked)">
+                                    ${cat}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
                 </div>
             </div>
         </div>
@@ -481,6 +635,19 @@ function seleccionarGrupoAficionados(bateriaIndex, configIndex) {
     actualizarCheckboxesCategorias(bateriaIndex, configIndex);
 }
 
+function seleccionarGrupoPersonalizadas(bateriaIndex, configIndex) {
+    const config = bateriasEnEdicion[bateriaIndex].data[configIndex];
+    if (!config.categoria) config.categoria = [];
+
+    categoriasPersonalizadas.forEach(cat => {
+        if (!config.categoria.includes(cat)) {
+            config.categoria.push(cat);
+        }
+    });
+
+    actualizarCheckboxesCategorias(bateriaIndex, configIndex);
+}
+
 function deseleccionarTodasCategorias(bateriaIndex, configIndex) {
     const config = bateriasEnEdicion[bateriaIndex].data[configIndex];
     config.categoria = [];
@@ -504,6 +671,15 @@ function actualizarCheckboxesCategorias(bateriaIndex, configIndex) {
     const containerAficionados = document.getElementById(`categorias-aficionados-${bateriaIndex}-${configIndex}`);
     if (containerAficionados) {
         const checkboxes = containerAficionados.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = config.categoria.includes(checkbox.value);
+        });
+    }
+
+    // Actualizar checkboxes de categorías personalizadas
+    const containerPersonalizadas = document.getElementById(`categorias-personalizadas-${bateriaIndex}-${configIndex}`);
+    if (containerPersonalizadas) {
+        const checkboxes = containerPersonalizadas.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
             checkbox.checked = config.categoria.includes(checkbox.value);
         });
@@ -623,8 +799,11 @@ function resetearConfiguracion() {
     if (confirm("¿Resetear la configuracion a los valores por defecto? Se perderan los cambios guardados.")) {
         localStorage.removeItem("configuracionBaterias");
         localStorage.removeItem("tipoAficionados");
+        localStorage.removeItem("categoriasPersonalizadas");
         tipoAficionados = "reducida";
+        categoriasPersonalizadas = [];
         bateriasEnEdicion = clonarBaterias(tres_baterias);
+        renderizarPanelCategoriasPersonalizadas();
         renderizarEditor();
         alert("Configuracion reseteada");
     }
@@ -638,8 +817,14 @@ function inicializarConfigurador() {
     // Cargar tipo de aficionados
     tipoAficionados = localStorage.getItem("tipoAficionados") || "reducida";
 
+    // Cargar categorías personalizadas
+    categoriasPersonalizadas = cargarCategoriasPersonalizadas();
+
     // Cargar configuración guardada o usar default
     bateriasEnEdicion = cargarConfiguracionBaterias();
+
+    // Filtrar categorías incompatibles con el tipo de aficionados actual
+    aplicarFiltroAficionados(tipoAficionados);
 
     // Renderizar el editor
     renderizarEditor();
@@ -690,6 +875,31 @@ function inicializarConfigurador() {
     if (btnImportarConfig) {
         btnImportarConfig.addEventListener("click", importarConfiguracion);
     }
+
+    // Configurar agregar categoría personalizada
+    const btnAgregarPersonalizada = document.getElementById("btnAgregarCategoriaPersonalizada");
+    if (btnAgregarPersonalizada) {
+        btnAgregarPersonalizada.addEventListener("click", () => {
+            const input = document.getElementById("inputNuevaCategoriaPersonalizada");
+            if (input) {
+                agregarCategoriaPersonalizada(input.value);
+                input.value = "";
+            }
+        });
+    }
+
+    const inputNuevaCategoria = document.getElementById("inputNuevaCategoriaPersonalizada");
+    if (inputNuevaCategoria) {
+        inputNuevaCategoria.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                agregarCategoriaPersonalizada(e.target.value);
+                e.target.value = "";
+            }
+        });
+    }
+
+    // Renderizar estado inicial del panel
+    renderizarPanelCategoriasPersonalizadas();
 }
 
 // Función para obtener las baterías actuales (usada por script.js)
